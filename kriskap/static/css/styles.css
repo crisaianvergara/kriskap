@@ -1,0 +1,56 @@
+/* HTML Tags */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #212529;
+}
+
+h3, legend {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.65rem;
+    letter-spacing: 3px;
+}
+
+a {
+    color: #212529;
+    text-decoration: none;
+}
+
+/* Navbar */
+.navbar-brand {
+    background-color: #DC3545;
+    border-radius: 3px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.form-control::placeholder {
+    color: #979797;
+    opacity: 1;
+}
+
+/* Home Section */
+#section-home .card-body:hover {
+    opacity: 0.9;
+    text-decoration: underline;
+}
+
+/* Login Section */
+.hover-underline:hover {
+    color: #0dcaf0;
+    text-decoration: underline;
+}
+
+/* Account Section */
+.account-img {
+    height: 125px;
+    width: 125px;
+  }
+
+/* Media Queries */
+@media (max-width: 992px) { 
+    .form-search {
+        margin-top: 1rem !important;
+        width: 100% !important;
+    }
+ }

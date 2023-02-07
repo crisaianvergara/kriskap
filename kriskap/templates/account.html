@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="account-login" class="content-section">
+        <div class="row">
+            <aside class="col-md-2 border-end">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Profile</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Delivery Address</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Products</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Recently Viewed</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Credits</a></li>
+                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Change Password</a></li>
+                </ul>
+            </aside>
+            <section class="col-md-9 ps-5">
+                <h3>My Profile</h3>
+                <p class="text-secondary">Manage and protect your account</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-8">
+                        <form method="POST" action="" novalidate>
+                            {{ form.csrf_token }}
+                            <fieldset>
+                                <div class="mb-3">
+                                    {{ form.username.label(class='form-label') }}
+                                    {% if form.username.errors %}
+                                        {{ form.username(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.username.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.username(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.name.label(class='form-label') }}
+                                    {% if form.name.errors %}
+                                        {{ form.name(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.name.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.name(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.email.label(class='form-label') }}
+                                    {% if form.email.errors %}
+                                        {{ form.email(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.email.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.email(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                {{ form.submit(class="btn btn-danger") }}
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="media text-center">
+                            <img src="{{ image_file }}" alt="" class="rounded-circle account-img">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+    </div>
+{% endblock %}

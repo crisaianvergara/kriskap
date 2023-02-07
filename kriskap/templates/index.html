@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="section-home" class="content-section">
+        <h3 class="text-center mb-5">PRODUCTS</h3>
+        <!-- Products -->
+        <div class="home-products d-flex flex-row flex-wrap justify-content-center">
+            {% for product in products %}
+                <!-- Card -->
+                <div class="card border-0 mx-2 mb-4" style="width: 20rem;">
+                    <div class="card-body pb-0">
+                        <a href="#">
+                            <img src="{{ product.product_image }}" class="card-img-top" alt="{{ product.product_name }} - image">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 py-0">
+                        <p class="card-text text-danger">₱ {{ product.product_price }}</p>
+                    </div>
+                </div>
+                <!-- End of Card -->
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
