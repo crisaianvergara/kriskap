@@ -1,28 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="account-login" class="content-section">
-        <div class="row">
-            <aside class="col-md-2 border-end">
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Profile</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Delivery Address</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Products</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Orders</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Recently Viewed</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">My Credits</a></li>
-                    <li class="nav-item"><a class="nav-link ps-0 py-3 text-dark" href="#">Change Password</a></li>
-                </ul>
-            </aside>
-            <section class="col-md-9 ps-5">
+    <div id="account-login" class="content-section mb-5">
+        <div class="row justify-content-evenly">
+            {% include "aside.html" %}
+            <section class="col-lg-8">
                 <h3>My Profile</h3>
-                <p class="text-secondary">Manage and protect your account</p>
+                <p class="text-secondary">Manage and protect your account.</p>
                 <hr>
-                <div class="row">
-                    <div class="col-md-8">
-                        <form method="POST" action="" novalidate>
-                            {{ form.csrf_token }}
-                            <fieldset>
+                <form method="POST" action="" novalidate enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    <fieldset>
+                        <div class="row justify-content-between">
+                            <div class="col-md-7">
                                 <div class="mb-3">
                                     {{ form.username.label(class='form-label') }}
                                     {% if form.username.errors %}
@@ -62,18 +52,26 @@
                                         {{ form.email(class='form-control') }}
                                     {% endif %}
                                 </div>
-                                {{ form.submit(class="btn btn-danger") }}
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="media text-center">
-                            <img src="{{ image_file }}" alt="" class="rounded-circle account-img">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="media text-center pt-4 mb-3" id="file_container">
+                                    <img id="view-profile-image" src="{{ image_file }}" alt="" class="rounded-circle account-img image_view">
+                                </div>
+                                <div class="mb-3 text-center profile-pic">
+                                    {{ form.image_f.label(class="form-control") }}
+                                    {{ form.image_f(class='form-control d-none') }}
+                                    {% if form.image_f.errors %}
+                                        {% for error in form.image_f.errors %}
+                                            <span class="text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        {{ form.submit(class="btn btn-danger") }}
+                    </fieldset>
+                </form>
             </section>
         </div>
-        
     </div>
 {% endblock %}

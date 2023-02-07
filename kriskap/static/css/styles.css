@@ -47,10 +47,28 @@ a {
     width: 125px;
   }
 
+.list-group-item {
+    font-weight: 700;
+}
+
+.list-group-item i {
+    width: 30px;
+}
+
+.profile-pic label {
+    cursor: pointer;
+}
+
+
+
 /* Media Queries */
 @media (max-width: 992px) { 
     .form-search {
         margin-top: 1rem !important;
         width: 100% !important;
+    }
+
+    .notification-cart {
+        margin-top: 0.7rem;
     }
  }

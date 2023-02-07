@@ -4,6 +4,7 @@ from kriskap import db
 from kriskap.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from kriskap.users.forms import LoginForm, RegistrationForm, UpdateAccountForm
+from kriskap.users.utils import save_profile_picture
 
 
 users = Blueprint("users", __name__)
@@ -57,7 +58,7 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("main.home"))
+    return redirect(url_for("users.login"))
 
 
 @users.route("/account", methods=["GET", "POST"])
@@ -65,6 +66,9 @@ def logout():
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        if form.image_f.data:
+            image_f = save_profile_picture(form.image_f.data)
+            current_user.image_file = image_f
         current_user.username = form.username.data
         current_user.name = form.name.data
         current_user.email = form.email.data
