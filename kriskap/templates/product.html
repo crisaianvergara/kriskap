@@ -12,7 +12,6 @@
                     <thead>
                       <tr>
                         <th scope="col">Image</th>
-                        <th scope="col">File</th>
                         <th scope="col">Name</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Price</th>
@@ -21,64 +20,86 @@
                     </thead>
                     <tbody>
                     {% for product in products %}
-                        <form action="{{ url_for('products.update_product', product_id = product.id, product_name = product.name) }}" method="POST" novalidate enctype="multipart/form-data">
-                            {{ form.csrf_token }}
                             <tr class="align-middle">
-                                <td id="file_container">
-                                    <img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view">
-                                </td>
-                                <td class="w-25">
-                                    {% if form.image_f.errors %}
-                                        {{ form.image_f(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.image_f.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.image_f(class='form-control', value=product.name) }}
-                                    {% endif %}
-                                </td>
+                                <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.stock }}</td>
+                                <td>{{ product.price }}</td>
                                 <td>
-                                    {% if form.name.errors %}
-                                        {{ form.name(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.name.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
+                                <a href="#updateModal{{ product.id }}" class="btn btn-primary btn-sm" data-bs-toggle="modal">Update</a>
+                                    <!-- Modal Update -->
+                                    <form class="d-inline-block needs-validation" action="{{ url_for('products.update_product', product_id = product.id, product_name = product.name) }}" method="POST" novalidate enctype="multipart/form-data">
+                                        {{ form.csrf_token }}
+                                        <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="updateModalLabel">Update Product</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3 text-center" id="file_container">
+                                                            <img src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="img-fluid image_view">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            {% if form.image_f.errors %}
+                                                            {{ form.image_f(class='form-control is-invalid', onclick="selectImage()") }}
+                                                            <div class="invalid-feedback">
+                                                                {% for error in form.image_f.errors %}
+                                                                    <span>{{ error }}</span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            {{ form.image_f(class='form-control', accept="image/*", onclick="selectImage()") }}
+                                                        {% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            {% if form.name.errors %}
+                                                                {{ form.name(class='form-control is-invalid') }}
+                                                                <div class="invalid-feedback">
+                                                                    {% for error in form.name.errors %}
+                                                                        <span>{{ error }}</span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                {% else %}
+                                                                    {{ form.name(class='form-control', value=product.name) }}
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            {% if form.stock.errors %}
+                                                                {{ form.stock(class='form-control is-invalid') }}
+                                                                <div class="invalid-feedback">
+                                                                    {% for error in form.stock.errors %}
+                                                                        <span>{{ error }}</span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                {% else %}
+                                                                    {{ form.stock(class='form-control', value=product.stock) }}
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            {% if form.price.errors %}
+                                                                {{ form.price(class='form-control is-invalid') }}
+                                                                <div class="invalid-feedback">
+                                                                    {% for error in form.price.errors %}
+                                                                        <span>{{ error }}</span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                {% else %}
+                                                                    {{ form.price(class='form-control', value=product.price) }}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal" onclick="validateForms()">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    {% else %}
-                                        {{ form.name(class='form-control', value=product.name) }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if form.stock.errors %}
-                                        {{ form.stock(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.stock.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.stock(class='form-control', value=product.stock) }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if form.price.errors %}
-                                        {{ form.price(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.price.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.price(class='form-control', value=product.price) }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary btn-sm w-100 mb-1">Update</button>
-                                    <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal">Delete</a>
-                                    <!-- Modal -->
+                                    </form>
+                                    <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm" data-bs-toggle="modal">Delete</a>
+                                    <!-- Modal Delete-->
                                     <div class="modal fade" id="deleteModal{{ product.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -98,7 +119,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </form>
                     {% endfor %}
                     </tbody>
                   </table>
