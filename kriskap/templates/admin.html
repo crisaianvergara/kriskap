@@ -5,43 +5,48 @@
         <div class="row justify-content-between">
             {% include "aside.html" %}
             <section class="col-lg-9 ps-lg-5">
-                <h3>Products</h3>
-                <p class="text-secondary">Update and Delete products.</p>
+                <h3>Admins and Users</h3>
+                <p class="text-secondary">Add and Remove admins.</p>
                 <hr>
                 <table class="table">
                     <thead>
                       <tr>
                         <th scope="col">Image</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">User Type</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                    {% for product in products %}
+                    {% for user in users %}
                             <tr class="align-middle">
-                                <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view"></td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.stock }}</td>
-                                <td>₱ {{ "{:,}".format(product.price) }}.00</td>
+                                <td><img width="70px" src="{{ url_for('static', filename='img/profile_pics/' + user.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.user_type }}</td>
                                 <td>
-                                <a href="{{ url_for('products.update_product', product_id=product.id) }}" class="btn btn-primary btn-sm">Update</a>
-                                    <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm" data-bs-toggle="modal">Delete</a>
+                                    {% if user.user_type != "admin" %}
+                                        <a href="{{ url_for('admins.add_admin', user_id = user.id) }}" class="btn btn-primary btn-sm w-100">Add</a>
+                                    {% else %}
+                                        <a href="#removeModal{{ user.id }}" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal">Remove</a>
+                                    {% endif %}
                                     <!-- Modal Delete-->
-                                    <div class="modal fade" id="deleteModal{{ product.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="removeModal{{ user.id }}" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Product</h1>
+                                                    <h1 class="modal-title fs-5" id="removeModalLabel">Remove Admin</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Are you sure you want to delete {{ product.name }}?
+                                                    Are you sure you want {{ user.username }} to remove as admin?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a href="{{ url_for('products.delete_product', product_id = product.id, product_name = product.name) }}" class="btn btn-danger">Delete</a>
+                                                    <a href="{{ url_for('admins.remove_admin', user_id = user.id, username=user.username) }}" class="btn btn-danger">Remove</a>
                                                 </div>
                                             </div>
                                         </div>

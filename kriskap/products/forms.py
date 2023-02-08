@@ -17,12 +17,9 @@ class ProductForm(FlaskForm):
     submit = SubmitField("Submit")
 
     def validate_name(self, name):
-        if name.data != request.args.get("product_name"):
-            product_name = Product.query.filter_by(name=name.data).first()
-            if product_name:
-                raise ValidationError(
-                    "That name is taken. Please choose a different one."
-                )
+        product_name = Product.query.filter_by(name=name.data).first()
+        if product_name:
+            raise ValidationError("That name is taken. Please choose a different one.")
 
 
 class UpdateProductForm(FlaskForm):
@@ -31,6 +28,6 @@ class UpdateProductForm(FlaskForm):
     price = IntegerField("Price", validators=[DataRequired()])
     image_f = FileField(
         "Image",
-        validators=[FileAllowed(["jpg", "png", "jpeg", "webp"])],
+        validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg", "webp"])],
     )
     submit = SubmitField("Submit")

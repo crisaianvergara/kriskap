@@ -5,7 +5,7 @@
         <div class="row justify-content-between">
             {% include "aside.html" %}
             <section class="col-lg-9 ps-lg-5">
-                <h3>New Product</h3>
+                <h3>{{ title }}</h3>
                 <p class="text-secondary">All fields are required.</p>
                 <hr>
                 <form method="POST" action="" novalidate enctype="multipart/form-data">
@@ -68,7 +68,11 @@
                             </div>
                             <div class="col-lg-4 d-flex align-items-center justify-content-center">
                                 <div id="file_container" class="mb-3">
+                                    {% if title == "Update Product" %}
+                                    <img id="view-product-image" src="{{ image_file }}" alt="Image Preview" class="img-fluid image_view">
+                                    {% else %}
                                     <img id="view-product-image" src="{{ url_for('static', filename='img/product_pics/default.png') }}" alt="Image Preview" class="img-fluid image_view">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
