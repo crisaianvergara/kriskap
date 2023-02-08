@@ -1,7 +1,19 @@
 import os
 import secrets
-from flask import current_app
+from flask import current_app, abort
 from PIL import Image
+from functools import wraps
+from flask_login import current_user
+
+
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.user_type != "admin":
+            return abort(403)
+        return f(*args, **kwargs)
+
+    return decorated_function
 
 
 def save_profile_picture(form_picture):

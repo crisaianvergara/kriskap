@@ -3,18 +3,31 @@ from flask_login import login_required, current_user
 from kriskap import db
 from kriskap.models import Product
 from kriskap.products.forms import ProductForm
-from kriskap.products.utils import save_profile_picture
+from kriskap.products.utils import save_product_picture
+from kriskap.users.utils import admin_only
 
 products = Blueprint("products", __name__)
 
 
+@products.route("/product")
+@login_required
+@admin_only
+def product():
+    form = ProductForm()
+    products = Product.query.all()
+    return render_template(
+        "product.html", title="Products", products=products, form=form
+    )
+
+
 @products.route("/new-product", methods=["GET", "POST"])
 @login_required
+@admin_only
 def new_product():
     products = Product.query.all()
     form = ProductForm()
     if form.validate_on_submit():
-        image_f = save_profile_picture(form.image_f.data)
+        image_f = save_product_picture(form.image_f.data)
         new_product = Product(
             name=form.name.data,
             stock=form.stock.data,
@@ -26,17 +39,32 @@ def new_product():
         flash("Your product has been created!", "success")
         return redirect(url_for("products.new_product"))
     return render_template(
-        "product.html", title="Products", form=form, products=products
+        "create_product.html", title="Add Products", form=form, products=products
     )
 
 
-@products.route("/product/<int:product_id>/update")
+@products.route("/product/<int:product_id>/update", methods=["GET", "POST"])
 @login_required
-def update_product():
-    pass
+@admin_only
+def update_product(product_id):
+    form = ProductForm()
+    products = Product.query.all()
+    if form.validate_on_submit():
+        flash(
+            f"Product {request.args.get('product_name')} has been updated.", "success"
+        )
+        return redirect(url_for("products.product"))
+    return render_template(
+        "product.html", title="Products", products=products, form=form
+    )
 
 
-@products.route("/product/<int:product_id>/delete")
+@products.route("/product/<int:product_id>/<string:product_name>/delete")
 @login_required
-def delete_product():
-    pass
+@admin_only
+def delete_product(product_id, product_name):
+    product = Product.query.get_or_404(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    flash(f"{product_name} has been deleted!", "success")
+    return redirect(url_for("products.product"))

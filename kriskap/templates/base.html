@@ -68,6 +68,13 @@
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow dropdown-menu-lg-end ">
                                 <li><a class="dropdown-item" href="{{ url_for('users.account') }}">My Profile</a></li>
                                 <li><a class="dropdown-item" href="#">My Orders</a></li>
+                                {% if current_user.user_type == "admin" %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Admin</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('products.product') }}">All Products</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('products.new_product') }}">New Product</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ url_for('users.logout') }}">Logout</a></li>
                             </ul>
                         </li>

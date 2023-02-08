@@ -2,84 +2,17 @@
 
 {% block content %}
     <div id="account-login" class="content-section mb-5">
-        <div class="row justify-content-evenly">
+        <div class="row justify-content-between">
             {% include "aside.html" %}
-            <section class="col-lg-8">
+            <section class="col-lg-9 ps-lg-5">
                 <h3>Products</h3>
-                <p class="text-secondary">Add, edit and delete products.</p>
+                <p class="text-secondary">Update and Delete products.</p>
                 <hr>
-                <form method="POST" action="" novalidate enctype="multipart/form-data">
-                    {{ form.csrf_token }}
-                    <fieldset>
-                        <div class="row justify-content-between">
-                            <div class="col-lg-7">
-                                <div class="mb-3">
-                                    {{ form.name.label(class='form-label') }}
-                                    {% if form.name.errors %}
-                                        {{ form.name(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.name.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.name(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.stock.label(class='form-label') }}
-                                    {% if form.stock.errors %}
-                                        {{ form.stock(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.stock.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.stock(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.price.label(class='form-label') }}
-                                    {% if form.price.errors %}
-                                        {{ form.price(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.price.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.price(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.image_f.label(class='form-label') }}
-                                    {% if form.image_f.errors %}
-                                        {{ form.image_f(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.image_f.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.image_f(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-lg-4 d-flex align-items-center">
-                                <div id="file_container" class="mb-3">
-                                    <img id="view-product-image" src="{{ url_for('static', filename='img/product_pics/default.png') }}" alt="Image Preview" class="img-fluid image_view">
-                                </div>
-                            </div>
-                        </div>
-                        {{ form.submit(class="btn btn-danger") }}
-                    </fieldset>
-                </form>
-                <hr class="mb-5">
                 <table class="table">
                     <thead>
                       <tr>
                         <th scope="col">Image</th>
+                        <th scope="col">File</th>
                         <th scope="col">Name</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Price</th>
@@ -88,16 +21,84 @@
                     </thead>
                     <tbody>
                     {% for product in products %}
-                        <tr class="align-middle">
-                            <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Product Image"></td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.stock }}</td>
-                            <td>₱ {{ "{:,}".format(product.price) }}.00</td>
-                            <td>
-                                <a href="{{ url_for('products.update_product', product_id = product.id) }}" class="btn btn-primary btn-sm">Update</a>
-                                <a href="{{ url_for('products.delete_product', product_id = product.id) }}" class="btn btn-danger btn-sm">Delete</a>
-                            </td>
-                        </tr>
+                        <form action="{{ url_for('products.update_product', product_id = product.id, product_name = product.name) }}" method="POST" novalidate enctype="multipart/form-data">
+                            {{ form.csrf_token }}
+                            <tr class="align-middle">
+                                <td id="file_container">
+                                    <img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view">
+                                </td>
+                                <td class="w-25">
+                                    {% if form.image_f.errors %}
+                                        {{ form.image_f(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.image_f.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.image_f(class='form-control', value=product.name) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if form.name.errors %}
+                                        {{ form.name(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.name.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.name(class='form-control', value=product.name) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if form.stock.errors %}
+                                        {{ form.stock(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.stock.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.stock(class='form-control', value=product.stock) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if form.price.errors %}
+                                        {{ form.price(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.price.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.price(class='form-control', value=product.price) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm w-100 mb-1">Update</button>
+                                    <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal">Delete</a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteModal{{ product.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Product</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete {{ product.name }}?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a href="{{ url_for('products.delete_product', product_id = product.id, product_name = product.name) }}" class="btn btn-danger">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </form>
                     {% endfor %}
                     </tbody>
                   </table>

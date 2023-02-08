@@ -7,6 +7,7 @@
     <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-lock"></i>Change Password</a>
     {% if current_user.user_type == "admin" %}
         <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-key"></i>Admin</a>
-        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.new_product') }}"><i class="fa-solid fa-boxes-stacked"></i>Products</a>
+        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.product') }}"><i class="fa-solid fa-boxes-stacked"></i>All Products</a>
+        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.new_product') }}"><i class="fa-solid fa-box"></i>New Product</a>
     {% endif %}
 </aside>
