@@ -55,14 +55,14 @@
                                 <div class="mb-3">
                                     {{ form.image_f.label(class='form-label') }}
                                     {% if form.image_f.errors %}
-                                        {{ form.image_f(class='form-control is-invalid') }}
+                                        {{ form.image_f(class='form-control is-invalid', onclick="selectImage()") }}
                                         <div class="invalid-feedback">
                                             {% for error in form.image_f.errors %}
                                                 <span>{{ error }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ form.image_f(class='form-control') }}
+                                        {{ form.image_f(class='form-control', onclick="selectImage()") }}
                                     {% endif %}
                                 </div>
                             </div>

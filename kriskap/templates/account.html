@@ -58,7 +58,7 @@
                                     <img id="view-profile-image" src="{{ image_file }}" alt="" class="rounded-circle account-img image_view">
                                 </div>
                                 <div class="mb-3 text-center profile-pic">
-                                    {{ form.image_f.label(class="form-control") }}
+                                    {{ form.image_f.label(class="form-control", onclick="selectImage()") }}
                                     {{ form.image_f(class='form-control d-none') }}
                                     {% if form.image_f.errors %}
                                         {% for error in form.image_f.errors %}
