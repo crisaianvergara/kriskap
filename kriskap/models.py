@@ -1,5 +1,6 @@
 from kriskap import db, login_manager
 from flask_login import UserMixin
+from sqlalchemy.orm import relationship
 
 
 @login_manager.user_loader
@@ -17,6 +18,8 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(250), nullable=False, default="default.png")
     password = db.Column(db.String(100), nullable=False)
 
+    carts = relationship("Cart", back_populates="buyer")
+
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -25,3 +28,18 @@ class Product(db.Model):
     stock = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     image_file = db.Column(db.String(250), nullable=False)
+
+    carts = relationship("Cart", back_populates="parent_product")
+
+
+class Cart(db.Model):
+    __tablename__ = "carts"
+    id = db.Column(db.Integer, primary_key=True)
+
+    buyer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    buyer = relationship("User", back_populates="carts")
+
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
+    parent_product = relationship("Product", back_populates="carts")
+
+    quantity = db.Column(db.Integer, nullable=True, default=0)

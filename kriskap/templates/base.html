@@ -39,10 +39,6 @@
                         <li class="nav-item">
                             <a href="" class="nav-link position-relative d-inline-block">
                                 <i class="fa-solid fa-envelope"></i>
-                                <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                    1
-                                    <span class="visually-hidden">items on cart</span>
-                                </span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -51,11 +47,14 @@
                             </a>
                         </li>
                         <li class="nav-item me-5">
-                            <a href="" class="nav-link position-relative d-inline-block">
+                            <a href="{{ url_for('carts.view_cart') }}" class="nav-link position-relative d-inline-block">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                    3
-                                    <span class="visually-hidden">items on cart</span>
+                                    {% set items = [] %}
+                                    {% for item in current_user.carts %}
+                                        {% if items.append(item.quantity) %}{% endif %}
+                                    {% endfor %}
+                                    {{ items | sum }}
                                 </span>
                             </a>
                         </li>

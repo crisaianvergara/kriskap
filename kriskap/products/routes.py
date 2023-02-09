@@ -91,9 +91,3 @@ def delete_product(product_id):
     db.session.commit()
     flash(f"{product.name} has been deleted!", "success")
     return redirect(url_for("products.product"))
-
-
-@products.route("/product/<int:product_id>/view-product")
-def view_product(product_id):
-    product = Product.query.get_or_404(product_id)
-    return render_template("view_product.html", product=product, title=product.name)

@@ -77,6 +77,14 @@ a {
     line-height: 24px;
 }
 
+/* Section Cart */
+
+.td-input {
+    width: 15%;
+}
+.td-input div {
+    width: 110px !important;
+}
 
 /* Media Queries */
 @media (max-width: 992px) { 

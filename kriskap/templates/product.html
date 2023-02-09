@@ -25,8 +25,6 @@
                                 <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.stock }}</td>
-                                <!-- <td>₱ {{ "{:,}".format(product.price | float) }}</td> -->
-                                <!-- <td>{{ "₱ %.2f"|format(product.price) }}</td> -->
                                 <td>{{ "₱{:,.2f}".format(product.price) }}</td>
                                 <td>
                                 <a href="{{ url_for('products.update_product', product_id=product.id) }}" class="btn btn-primary btn-sm">Update</a>
