@@ -1,3 +1,4 @@
+// Preview Image
 function selectImage() {
   const image_f = document.getElementById("image_f");
   const file_container = document.getElementById("file_container");
@@ -17,24 +18,28 @@ function selectImage() {
       }
   });
 }
-function validateForms() {
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (() => {
-    'use strict'
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation')
 
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+// Update Cart Quantity
+$(document).ready(function() {
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-}
+    $('.quantityChange').on('change', function() {
+
+        var cart_id = $(this).attr('cart_id');
+        var quantity = $('#quantityChange'+cart_id).val();
+
+        req = $.ajax({
+            url : '/update',
+            type : 'POST',
+            data : { cart_id : cart_id, quantity: quantity }
+        });
+
+        req.done(function(data) {
+            var total = data.total
+            $('#cartNumber'+cart_id).text(total.toFixed(2));
+            console.log((total).toFixed(2));
+        });
+
+    });
+
+});

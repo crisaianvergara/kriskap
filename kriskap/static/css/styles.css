@@ -82,8 +82,13 @@ a {
 .td-input {
     width: 15%;
 }
-.td-input div {
-    width: 110px !important;
+
+.cart-subtotal-title {
+    font-size: 18px;
+}
+
+.cart-subtotal-price {
+    font-weight: 700;
 }
 
 /* Media Queries */

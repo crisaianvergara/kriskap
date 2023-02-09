@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_required, current_user
 from kriskap.models import Cart, Product
 from kriskap.carts.forms import CartForm
@@ -47,3 +47,25 @@ def view_product(product_id):
 def view_cart():
     carts = Cart.query.filter_by(buyer_id=current_user.id)
     return render_template("cart.html", title="View Cart", carts=carts)
+
+
+@carts.route("/cart/<int:cart_id>/remove")
+@login_required
+def remove_cart(cart_id):
+    cart = Cart.query.get_or_404(cart_id)
+    product_name = cart.parent_product.name
+    db.session.delete(cart)
+    db.session.commit()
+    flash(f"{product_name} removed from your cart.", "success")
+    return redirect(url_for("carts.view_cart"))
+
+
+@carts.route("/update", methods=["POST"])
+@login_required
+def update():
+    cart = Cart.query.get_or_404(request.form["cart_id"])
+    cart.quantity = request.form["quantity"]
+    db.session.commit()
+    total = cart.quantity * cart.parent_product.price
+
+    return jsonify({"result": "success", "total": total})
