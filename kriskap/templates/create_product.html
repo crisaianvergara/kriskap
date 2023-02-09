@@ -41,30 +41,34 @@
                                 </div>
                                 <div class="mb-3">
                                     {{ form.price.label(class='form-label') }}
-                                    {% if form.price.errors %}
-                                        {{ form.price(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.price.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.price(class='form-control') }}
-                                    {% endif %}
+                                    <div class="input-group">
+                                        <span class="input-group-text">₱</span>
+                                        {% if form.price.errors %}
+                                            {{ form.price(class='form-control is-invalid') }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.price.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.price(class='form-control') }}
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="">
                                     {{ form.image_f.label(class='form-label') }}
                                     {% if form.image_f.errors %}
-                                        {{ form.image_f(class='form-control is-invalid', onclick="selectImage()") }}
+                                        {{ form.image_f(class='form-control is-invalid', onclick="selectImage()",  accept="image/*") }}
                                         <div class="invalid-feedback">
                                             {% for error in form.image_f.errors %}
                                                 <span>{{ error }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ form.image_f(class='form-control', onclick="selectImage()") }}
+                                        {{ form.image_f(class='form-control', onclick="selectImage()",  accept="image/*") }}
                                     {% endif %}
                                 </div>
+                                <small class="text-muted">File size: maximum 1 MB | File extension: .JPEG, .JPG, .PNG</small>
                             </div>
                             <div class="col-lg-4 d-flex align-items-center justify-content-center">
                                 <div id="file_container" class="mb-3">
@@ -76,7 +80,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ form.submit(class="btn btn-danger") }}
+                        {{ form.submit(class="btn btn-danger mt-3") }}
                     </fieldset>
                 </form>
             </section>

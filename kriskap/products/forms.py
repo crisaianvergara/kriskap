@@ -1,15 +1,15 @@
 from flask import request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, FloatField
 from wtforms.validators import DataRequired, Length, ValidationError
 from kriskap.models import Product
 
 
 class ProductForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
-    stock = IntegerField("Stock", validators=[DataRequired()])
-    price = IntegerField("Price", validators=[DataRequired()])
+    stock = IntegerField("Stock")
+    price = FloatField("Price")
     image_f = FileField(
         "Image",
         validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg", "webp"])],
@@ -24,8 +24,8 @@ class ProductForm(FlaskForm):
 
 class UpdateProductForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
-    stock = IntegerField("Stock", validators=[DataRequired()])
-    price = IntegerField("Price", validators=[DataRequired()])
+    stock = IntegerField("Stock")
+    price = FloatField("Price")
     image_f = FileField(
         "Image",
         validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg", "webp"])],

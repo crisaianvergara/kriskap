@@ -7,15 +7,18 @@
         <div class="home-products d-flex flex-row flex-wrap justify-content-center">
             {% for product in products %}
                 <!-- Card -->
-                <div class="card border-0 mx-2 mb-4" style="width: 16rem;">
-                    <div class="card-body pb-0">
-                        <a href="#">
+                <div class="card border-0 m-4 shadow-lg position-relative" style="width: 16rem;">
+                    <div class="card-body">
+                        <a href="#" class="nav-link position-absolute top-0 end-0 m-3">
+                            <i class="fa-solid fa-star text-danger"></i>
+                        </a>
+                        <a href="{{ url_for('products.view_product', product_id=product.id) }}">
                             <img src="{{ url_for('static', filename='img/product_pics/' + product.image_file ) }}" class="card-img-top" alt="{{ product.name }}-Image">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h5 class="card-title mb-0">{{ product.name }}</h5>
                         </a>
                     </div>
-                    <div class="card-footer bg-transparent border-0 py-0">
-                        <p class="card-text text-danger">₱ {{ "{:,}".format(product.price) }}.00</p>
+                    <div class="card-footer bg-transparent">
+                        <p class="card-text text-danger">{{ "₱{:,.2f}".format(product.price) }}</p>
                     </div>
                 </div>
                 <!-- End of Card -->

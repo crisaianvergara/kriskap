@@ -23,7 +23,7 @@ def add_admin(user_id):
     user = User.query.get_or_404(user_id)
     user.user_type = "admin"
     db.session.commit()
-    flash(f"{user.username} has been add as an admin.", "success")
+    flash(f"{user.username} has been added as an admin.", "success")
     return redirect(url_for("admins.admin"))
 
 
@@ -34,5 +34,5 @@ def remove_admin(user_id):
     user = User.query.get_or_404(user_id)
     user.user_type = "customer"
     db.session.commit()
-    flash(f"{user.username} has been remove as an admin.", "success")
+    flash(f"{user.username} has been removed as an admin.", "success")
     return redirect(url_for("admins.admin"))

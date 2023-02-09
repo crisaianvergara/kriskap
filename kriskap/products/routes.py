@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
+from sqlalchemy import desc
 from flask_login import login_required
 from kriskap import db
 from kriskap.models import Product
@@ -14,7 +15,7 @@ products = Blueprint("products", __name__)
 @admin_only
 def product():
     form = ProductForm()
-    products = Product.query.all()
+    products = Product.query.order_by(desc("id")).all()
     return render_template(
         "product.html", title="Products", products=products, form=form
     )
@@ -36,8 +37,8 @@ def new_product():
         )
         db.session.add(new_product)
         db.session.commit()
-        flash("Your product has been created!", "success")
-        return redirect(url_for("products.new_product"))
+        flash("Product has been added!", "success")
+        return redirect(url_for("products.product"))
     return render_template(
         "create_product.html", title="New Product", form=form, products=products
     )
@@ -64,8 +65,6 @@ def update_product(product_id):
         if form.image_f.data != product.image_file:
             image_f = save_product_picture(form.image_f.data)
             product.image_file = image_f
-        else:
-            product.name = form.name.data
         product.name = form.name.data
         product.stock = form.stock.data
         product.price = form.price.data
@@ -83,12 +82,18 @@ def update_product(product_id):
     )
 
 
-@products.route("/product/<int:product_id>/<string:product_name>/delete")
+@products.route("/product/<int:product_id>/delete")
 @login_required
 @admin_only
-def delete_product(product_id, product_name):
+def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     db.session.delete(product)
     db.session.commit()
-    flash(f"{product_name} has been deleted!", "success")
+    flash(f"{product.name} has been deleted!", "success")
     return redirect(url_for("products.product"))
+
+
+@products.route("/product/<int:product_id>/view-product")
+def view_product(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template("view_product.html", product=product, title=product.name)

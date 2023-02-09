@@ -59,6 +59,23 @@ a {
     cursor: pointer;
 }
 
+/* Section View Product */
+#section-view-product h1 {
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 32.4px;
+}
+
+#section-view-product .text-price {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+#section-view-product .text-quantity {
+    font-weight: 700;
+    line-height: 24px;
+}
 
 
 /* Media Queries */

@@ -6,7 +6,8 @@
             {% include "aside.html" %}
             <section class="col-lg-9 ps-lg-5">
                 <h3>Products</h3>
-                <p class="text-secondary">Update and Delete products.</p>
+                <p class="text-secondary">Add, update and delete products.</p>
+                <a href="{{ url_for('products.new_product') }}" class="btn btn-success">New Product</a>
                 <hr>
                 <table class="table">
                     <thead>
@@ -24,7 +25,9 @@
                                 <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.stock }}</td>
-                                <td>₱ {{ "{:,}".format(product.price) }}.00</td>
+                                <!-- <td>₱ {{ "{:,}".format(product.price | float) }}</td> -->
+                                <!-- <td>{{ "₱ %.2f"|format(product.price) }}</td> -->
+                                <td>{{ "₱{:,.2f}".format(product.price) }}</td>
                                 <td>
                                 <a href="{{ url_for('products.update_product', product_id=product.id) }}" class="btn btn-primary btn-sm">Update</a>
                                     <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm" data-bs-toggle="modal">Delete</a>
@@ -41,7 +44,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a href="{{ url_for('products.delete_product', product_id = product.id, product_name = product.name) }}" class="btn btn-danger">Delete</a>
+                                                    <a href="{{ url_for('products.delete_product', product_id = product.id) }}" class="btn btn-danger">Delete</a>
                                                 </div>
                                             </div>
                                         </div>

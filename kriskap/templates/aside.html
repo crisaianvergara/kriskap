@@ -1,13 +1,14 @@
-<aside class="col-lg-3 list-group pe-0 mb-3">
-    <a class="list-group-item list-group-item-action py-3" href="{{ url_for('users.account') }}"><i class="fa-solid fa-user"></i>My Profile</a>
-    <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-house"></i>Delivery Address</a>
-    <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-bag-shopping"></i>My Orders</a>
-    <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-eye"></i>Recently Viewed</a>
-    <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-credit-card"></i>My Credits</a>
-    <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-lock"></i>Change Password</a>
-    {% if current_user.user_type == "admin" %}
-        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('admins.admin') }}"><i class="fa-solid fa-key"></i>Admin</a>
-        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.product') }}"><i class="fa-solid fa-boxes-stacked"></i>All Products</a>
-        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.new_product') }}"><i class="fa-solid fa-box"></i>New Product</a>
-    {% endif %}
+<aside class="col-lg-3 pe-0 mb-3">
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('users.account') }}"><i class="fa-solid fa-user"></i>My Profile</a>
+        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-house"></i>Delivery Address</a>
+        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-bag-shopping"></i>My Orders</a>
+        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-eye"></i>Recently Viewed</a>
+        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-credit-card"></i>My Credits</a>
+        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-lock"></i>Change Password</a>
+        {% if current_user.user_type == "admin" %}
+            <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.product') }}"><i class="fa-solid fa-box"></i>Products</a>
+            <a class="list-group-item list-group-item-action py-3" href="{{ url_for('admins.admin') }}"><i class="fa-solid fa-key"></i>Admin & Users</a>
+        {% endif %}
+    </div>
 </aside>

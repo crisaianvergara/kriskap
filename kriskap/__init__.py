@@ -21,10 +21,12 @@ def create_app():
     from kriskap.users.routes import users
     from kriskap.products.routes import products
     from kriskap.admins.routes import admins
+    from kriskap.carts.routes import carts
 
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(products)
     app.register_blueprint(admins)
+    app.register_blueprint(carts)
 
     return app
