@@ -20,7 +20,7 @@ function selectImage() {
 }
 
 
-// Section Cart
+// Section Cart - Increase and Decrease Items on Cart
 $(document).ready(function() {
     $('.quantityChange').on('change', function() {
         var cart_id = $(this).attr('cart_id');
@@ -31,7 +31,7 @@ $(document).ready(function() {
         }
         if (quantity) {
             req = $.ajax({
-                url : '/update',
+                url : '/cart/update',
                 type : 'POST',
                 data : { cart_id : cart_id, quantity: quantity }
             });
@@ -49,7 +49,7 @@ $(document).ready(function() {
 });
 
 
-// Section View Product
+// Section View Product - Increase and Decrease Item on Quantity Field
 $(document).ready(function() {
     $('#quantity').on('change', function() {
         var quantity = $('#quantity').val();
@@ -59,7 +59,7 @@ $(document).ready(function() {
             quantity = 1
         }
         req = $.ajax({
-            url : '/check-stock',
+            url : '/cart/check-stock',
             type : 'POST',
             data : { quantity: quantity, product_id:product_id }
         });

@@ -48,7 +48,7 @@
                         </li>
                         <li class="nav-item me-5">
                             <!-- Check Number of Item in Cart -->
-                            <a href="{{ url_for('carts.view_cart') }}" class="nav-link position-relative d-inline-block">
+                            <a href="{{ url_for('carts.cart') }}" class="nav-link position-relative d-inline-block">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 {% if current_user.is_authenticated %}
                                     <span id="cartTotal" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">

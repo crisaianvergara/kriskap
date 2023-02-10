@@ -14,18 +14,14 @@ products = Blueprint("products", __name__)
 @login_required
 @admin_only
 def product():
-    form = ProductForm()
     products = Product.query.order_by(desc("id")).all()
-    return render_template(
-        "product.html", title="Products", products=products, form=form
-    )
+    return render_template("product.html", title="Products", products=products)
 
 
-@products.route("/new-product", methods=["GET", "POST"])
+@products.route("/product/new", methods=["GET", "POST"])
 @login_required
 @admin_only
 def new_product():
-    products = Product.query.all()
     form = ProductForm()
     if form.validate_on_submit():
         image_f = save_product_picture(form.image_f.data)
@@ -39,9 +35,7 @@ def new_product():
         db.session.commit()
         flash("Product has been added!", "success")
         return redirect(url_for("products.product"))
-    return render_template(
-        "create_product.html", title="New Product", form=form, products=products
-    )
+    return render_template("create_product.html", title="New Product", form=form)
 
 
 @products.route("/product/<int:product_id>/update", methods=["GET", "POST"])
