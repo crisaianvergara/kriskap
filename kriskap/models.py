@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(100), nullable=False)
 
     carts = relationship("Cart", back_populates="buyer")
+    wishlists = relationship("Wishlist", back_populates="wisher")
 
 
 class Product(db.Model):
@@ -30,6 +31,7 @@ class Product(db.Model):
     image_file = db.Column(db.String(250), nullable=False)
 
     carts = relationship("Cart", back_populates="parent_product")
+    wishlists = relationship("Wishlist", back_populates="parent_product")
 
 
 class Cart(db.Model):
@@ -43,3 +45,14 @@ class Cart(db.Model):
     parent_product = relationship("Product", back_populates="carts")
 
     quantity = db.Column(db.Integer, nullable=True, default=0)
+
+
+class Wishlist(db.Model):
+    __tablename__ = "wishlists"
+    id = db.Column(db.Integer, primary_key=True)
+
+    buyer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    wisher = relationship("User", back_populates="wishlists")
+
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
+    parent_product = relationship("Product", back_populates="wishlists")

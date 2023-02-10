@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="section-wishlist" class="content-section mb-5">
+        <div class="row justify-content-between">
+            {% include "aside.html" %}
+            <div class="col-lg-9 ps-lg-5">
+                <h3>My Wishlist</h3>
+                <p class="text-secondary">Wish what you really want.</p>
+                <hr>
+                <div class="d-flex flex-row flex-wrap justify-content-start">
+                    {% for wishlist in wishlists %}
+                    <div class="card border-0 m-4 shadow-lg position-relative" style="width: 10rem;">
+                        <div class="card-body the-product">
+                            <a href="{{ url_for('wishlists.remove_wishlist', wishlist_id=wishlist.id) }}" class="nav-link position-absolute top-0 end-0 m-3">
+                                <i class="fa-solid fa-x text-danger"></i>
+                            </a>
+                            <a href="{{ url_for('carts.view_product', product_id=wishlist.parent_product.id) }}">
+                                <img src="{{ url_for('static', filename='img/product_pics/' + wishlist.parent_product.image_file ) }}" class="card-img-top" alt="{{ wishlist.parent_product.name }}-Image">
+                                <h5 class="card-title mb-0">{{ wishlist.parent_product.name }}</h5>
+                            </a>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <p class="card-text text-danger">{{ "₱{:,.2f}".format(wishlist.parent_product.price) }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
