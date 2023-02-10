@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="account-login" class="content-section mb-5">
+    <section id="section-admin" class="content-section mb-5">
         <div class="row justify-content-between">
             {% include "aside.html" %}
-            <section class="col-lg-9 ps-lg-5">
+            <div class="col-lg-9 ps-lg-5">
                 <h3>Admins and Users</h3>
                 <p class="text-secondary">Add and remove admins.</p>
                 <hr>
@@ -21,42 +21,42 @@
                     </thead>
                     <tbody>
                     {% for user in users %}
-                            <tr class="align-middle">
-                                <td><img width="70px" src="{{ url_for('static', filename='img/profile_pics/' + user.image_file) }}" alt="Image Preview" class="image_view"></td>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.user_type }}</td>
-                                <td>
-                                    {% if user.user_type != "admin" %}
-                                        <a href="{{ url_for('admins.add_admin', user_id = user.id) }}" class="btn btn-primary btn-sm w-100">Add</a>
-                                    {% else %}
-                                        <a href="#removeModal{{ user.id }}" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal">Remove</a>
-                                    {% endif %}
-                                    <!-- Modal Delete-->
-                                    <div class="modal fade" id="removeModal{{ user.id }}" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="removeModalLabel">Remove Admin</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you sure you want {{ user.username }} to remove as admin?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a href="{{ url_for('admins.remove_admin', user_id = user.id, username=user.username) }}" class="btn btn-danger">Remove</a>
-                                                </div>
+                        <tr class="align-middle">
+                            <td><img width="70px" src="{{ url_for('static', filename='img/profile_pics/' + user.image_file) }}" alt="Image Preview" class="image_view"></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.user_type }}</td>
+                            <td>
+                                {% if user.user_type != "admin" %}
+                                    <a href="{{ url_for('admins.add_admin', user_id = user.id) }}" class="btn btn-primary btn-sm w-100">Add</a>
+                                {% else %}
+                                    <a href="#removeModal{{ user.id }}" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal">Remove</a>
+                                {% endif %}
+                                <!-- Modal Delete-->
+                                <div class="modal fade" id="removeModal{{ user.id }}" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="removeModalLabel">Remove Admin</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want {{ user.username }} to remove as admin?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a href="{{ url_for('admins.remove_admin', user_id = user.id, username=user.username) }}" class="btn btn-danger">Remove</a>
                                             </div>
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
-                  </table>
-            </section>
+                </table>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

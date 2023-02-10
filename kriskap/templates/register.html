@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="section-register" class="content-section col-lg-6 m-auto">
+    <section id="section-register" class="content-section col-lg-6 m-auto">
         <form method="POST" action="" novalidate>
             {{ form.csrf_token }}
             <fieldset>
@@ -77,5 +77,5 @@
         <div class="border-top mt-3 pt-3">
             <small class="text-muted">Have an account already?<a href="{{ url_for('users.login') }}" class="text-info hover-underline"> Log in</a></small>
         </div>
-    </div>
+    </section>
 {% endblock %}

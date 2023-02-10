@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="account-login" class="content-section mb-5">
+    <section id="section-create-product" class="content-section mb-5">
         <div class="row justify-content-between">
             {% include "aside.html" %}
-            <section class="col-lg-9 ps-lg-5">
+            <div class="col-lg-9 ps-lg-5">
                 <h3>{{ title }}</h3>
                 <p class="text-secondary">All fields are required.</p>
                 <hr>
@@ -73,9 +73,9 @@
                             <div class="col-lg-4 d-flex align-items-center justify-content-center">
                                 <div id="file_container" class="mb-3">
                                     {% if title == "Update Product" %}
-                                    <img id="view-product-image" src="{{ image_file }}" alt="Image Preview" class="img-fluid image_view">
+                                        <img id="view-product-image" src="{{ image_file }}" alt="Image Preview" class="img-fluid image_view">
                                     {% else %}
-                                    <img id="view-product-image" src="{{ url_for('static', filename='img/product_pics/default.png') }}" alt="Image Preview" class="img-fluid image_view">
+                                        <img id="view-product-image" src="{{ url_for('static', filename='img/product_pics/default.png') }}" alt="Image Preview" class="img-fluid image_view">
                                     {% endif %}
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                         {{ form.submit(class="btn btn-danger mt-3") }}
                     </fieldset>
                 </form>
-            </section>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

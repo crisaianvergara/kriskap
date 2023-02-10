@@ -1,57 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="section-cart" class="content-section">
-        <section class="col-lg-12">
-            <h3>Shopping Cart</h3>
-            <p class="text-secondary">Enjoy shopping.</p>
-            <hr>
-            <table class="table">
-                <thead>
-                    <tr>
-                    <th scope="col">Product Image</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Unit Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for cart in carts %}
-                    <tr class="align-middle">
-                        <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
-                        <td>{{ cart.parent_product.name }}</td>
-                        <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
-                        <td class="td-input">
-                            <input onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="1" type="number" id="quantityChange{{ cart.id }}" cart_id = "{{ cart.id }}" value="{{ cart.quantity }}" class="quantityChange form-control text-center rounded-0 w-50">
-                        </td>
-                        <td id="cartNumber{{ cart.id }}" class="total-price">
-                            {{ "₱{:,.2f}".format(cart.parent_product.price * cart.quantity) }}
-                        </td>
-                        <td><a class="btn btn-danger btn-sm" href="{{ url_for('carts.remove_cart', cart_id=cart.id) }}" class="text-danger">Remove</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-        </section>
-        </div>
+    <section id="section-cart" class="content-section">
         <div class="row justify-content-center">
-          <section class="col-lg-12 ps-lg-5">
-              <div class="cart-subtotal d-flex justify-content-end mb-4">
-                <span class="cart-subtotal-title">Subtotal</span>
-                <span id="cart_subtotal" class="cart-subtotal-price ms-5">
-                    {% set subtotal = [] %}
-                    {% for cart in carts %}
-                    {% if subtotal.append(cart.parent_product.price * cart.quantity) %}{% endif %}
-                    {% endfor %}
-                    {{ "₱{:,.2f}".format(subtotal | sum) }}
-                </span>
+            <div class="col-lg-12">
+                <h3>Shopping Cart</h3>
+                <p class="text-secondary">Edit and remove quantity on cart.</p>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Product Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cart in carts %}
+                            <tr class="align-middle">
+                                <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                <td>{{ cart.parent_product.name }}</td>
+                                <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
+                                <td class="td-input">
+                                    <input onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="1" type="number" id="quantityChange{{ cart.id }}" cart_id = "{{ cart.id }}" value="{{ cart.quantity }}" class="quantityChange form-control text-center rounded-0 w-50">
+                                </td>
+                                <td id="cartNumber{{ cart.id }}" class="total-price">
+                                    {{ "₱{:,.2f}".format(cart.parent_product.price * cart.quantity) }}
+                                </td>
+                                <td><a class="btn btn-danger btn-sm" href="{{ url_for('carts.remove_cart', cart_id=cart.id) }}" class="text-danger">Remove</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12">
+                <!-- Compute Subtotal -->
+                <div class="cart-subtotal d-flex justify-content-end mb-4">
+                    <span class="cart-subtotal-title">Subtotal</span>
+                    <span id="cart_subtotal" class="cart-subtotal-price ms-5">
+                        {% set subtotal = [] %}
+                        {% for cart in carts %}
+                            {% if subtotal.append(cart.parent_product.price * cart.quantity) %}{% endif %}
+                        {% endfor %}
+                        {{ "₱{:,.2f}".format(subtotal | sum) }}
+                    </span>
                 </div>
                 <div class="mb-3 text-end">
                     <a href="#" class="btn btn-danger">Check Out</a>
                 </div>
-          </section>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

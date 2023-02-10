@@ -47,6 +47,7 @@
                             </a>
                         </li>
                         <li class="nav-item me-5">
+                            <!-- Check Number of Item in Cart -->
                             <a href="{{ url_for('carts.view_cart') }}" class="nav-link position-relative d-inline-block">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 {% if current_user.is_authenticated %}
@@ -91,6 +92,7 @@
             </div>
         </nav>
     </header>
+    <!-- Flash Alert -->
     {% with messages = get_flashed_messages(with_categories = true) %}
         {% if messages %}
             {% for category, message in messages %}
