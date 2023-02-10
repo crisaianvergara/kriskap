@@ -38,6 +38,7 @@ $(document).ready(function() {
             req.done(function(data) {
                 if (quantity > data.max){
                     $('#quantityChange'+cart_id).val(data.max);
+                    alert("You have reached the maximum quantity available for this item.")
                 }
                 $('#cartNumber'+cart_id).text(data.total);
                 $('#cartTotal').text(data.cart_total);
@@ -51,17 +52,22 @@ $(document).ready(function() {
 // Update View Product Section
 $(document).ready(function() {
     $('#quantity').on('change', function() {
-    var quantity = $('#quantity').val();
-    var product_id = $('#productId').val();
-    req = $.ajax({
-        url : '/check-stock',
-        type : 'POST',
-        data : { quantity: quantity, product_id:product_id }
-    });
-    req.done(function(data) {
-        if (quantity > data.available_stock) {
-            $('#quantity').val(data.available_stock);
+        var quantity = $('#quantity').val();
+        var product_id = $('#productId').val();
+        if (quantity < 1) {
+            $('#quantity').val(1);
+            quantity = 1
         }
+        req = $.ajax({
+            url : '/check-stock',
+            type : 'POST',
+            data : { quantity: quantity, product_id:product_id }
+        });
+        req.done(function(data) {
+            if (quantity > data.available_stock) {
+                $('#quantity').val(data.available_stock);
+                alert("You have reached the maximum quantity available for this item.")
+            }
+        });
     });
-});
 });

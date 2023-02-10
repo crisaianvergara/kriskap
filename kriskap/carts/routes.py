@@ -12,6 +12,17 @@ def view_product(product_id):
     form = CartForm(quantity="1")
     requested_product = Product.query.get_or_404(product_id)
     if current_user.is_authenticated:
+        # Check Available Stock
+        current_user_item = Cart.query.filter_by(
+            buyer_id=current_user.id, product_id=requested_product.id
+        ).first()
+        if current_user_item:
+            if requested_product.stock <= current_user_item.quantity:
+                flash(
+                    f"You have reached the maximum quantity available for {requested_product.name}.",
+                    "info",
+                )
+                return redirect(url_for("carts.view_cart"))
         if form.validate_on_submit():
             # Edit Cart
             current_user_item = Cart.query.filter_by(buyer_id=current_user.id).all()
@@ -20,7 +31,10 @@ def view_product(product_id):
                     if item.product_id == requested_product.id:
                         item.quantity += form.quantity.data
                         db.session.commit()
-                        flash("This item has been added to cart!", "success")
+                        flash(
+                            f"{requested_product.name} has been added to your cart!",
+                            "success",
+                        )
                         return redirect(
                             url_for("carts.view_product", product_id=product_id)
                         )
@@ -32,7 +46,7 @@ def view_product(product_id):
             )
             db.session.add(new_cart)
             db.session.commit()
-            flash("This item has been added to cart!", "success")
+            flash(f"{requested_product.name} has been added to your cart!", "success")
             return redirect(url_for("carts.view_product", product_id=product_id))
     return render_template(
         "view_product.html",
@@ -95,4 +109,11 @@ def need_login(product_id):
 @login_required
 def check_stock():
     product = Product.query.get_or_404(request.form["product_id"])
-    return jsonify({"result": "success", "available_stock": product.stock})
+    current_user_item = Cart.query.filter_by(
+        buyer_id=current_user.id, product_id=product.id
+    ).first()
+    if current_user_item:
+        available_stock = product.stock - current_user_item.quantity
+    else:
+        available_stock = product.stock
+    return jsonify({"result": "success", "available_stock": available_stock})

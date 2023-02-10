@@ -2,37 +2,39 @@
 
 {% block content %}
     <div id="section-cart" class="content-section">
-        <h3 class="text-center mb-5">SHOPPING CART</h3>
-            <section class="col-lg-12">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Product Image</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Unit Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total Price</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {% for cart in carts %}
-                        <tr class="align-middle">
-                            <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
-                            <td>{{ cart.parent_product.name }}</td>
-                            <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
-                            <td class="td-input">
-                                <input onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="1" type="number" id="quantityChange{{ cart.id }}" cart_id = "{{ cart.id }}" value="{{ cart.quantity }}" class="quantityChange form-control text-center rounded-0 w-50">
-                            </td>
-                            <td id="cartNumber{{ cart.id }}" class="total-price">
-                                {{ "₱{:,.2f}".format(cart.parent_product.price * cart.quantity) }}
-                            </td>
-                            <td><a class="btn btn-danger btn-sm" href="{{ url_for('carts.remove_cart', cart_id=cart.id) }}" class="text-danger">Remove</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                  </table>
-            </section>
+        <section class="col-lg-12">
+            <h3>Shopping Cart</h3>
+            <p class="text-secondary">Enjoy shopping.</p>
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for cart in carts %}
+                    <tr class="align-middle">
+                        <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                        <td>{{ cart.parent_product.name }}</td>
+                        <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
+                        <td class="td-input">
+                            <input onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="1" type="number" id="quantityChange{{ cart.id }}" cart_id = "{{ cart.id }}" value="{{ cart.quantity }}" class="quantityChange form-control text-center rounded-0 w-50">
+                        </td>
+                        <td id="cartNumber{{ cart.id }}" class="total-price">
+                            {{ "₱{:,.2f}".format(cart.parent_product.price * cart.quantity) }}
+                        </td>
+                        <td><a class="btn btn-danger btn-sm" href="{{ url_for('carts.remove_cart', cart_id=cart.id) }}" class="text-danger">Remove</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        </section>
         </div>
         <div class="row justify-content-center">
           <section class="col-lg-12 ps-lg-5">
