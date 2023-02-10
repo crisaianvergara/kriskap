@@ -4,6 +4,12 @@ body {
     color: #212529;
 }
 
+h1 {
+    font-size: 1.6875rem;
+    font-weight: 500;
+    line-height: 2.025rem;
+}
+
 h3, legend {
     font-size: 1.375rem;
     font-weight: 500;
@@ -29,62 +35,56 @@ a {
     opacity: 1;
 }
 
-/* Home Section */
-#section-home .card-body:hover {
+/* Section Home */
+.the-product:hover {
     opacity: 0.9;
     text-decoration: underline;
 }
 
-/* Login Section */
+/* Section Login */
 .hover-underline:hover {
     color: #0dcaf0;
     text-decoration: underline;
 }
 
-/* Account Section */
+/* Section Account */
 .account-img {
     height: 125px;
     width: 125px;
   }
 
+.profile-pic label {
+    cursor: pointer;
+}
+
+  /* Aside */
 .list-group-item {
     font-weight: 700;
 }
 
 .list-group-item i {
-    width: 30px;
-}
-
-.profile-pic label {
-    cursor: pointer;
+    width: 1.875rem;
 }
 
 /* Section View Product */
-#section-view-product h1 {
-    font-size: 27px;
-    font-weight: 500;
-    line-height: 32.4px;
+.text-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.875rem;
 }
 
-#section-view-product .text-price {
-    font-size: 20px;
+.text-quantity {
     font-weight: 700;
-    line-height: 30px;
-}
-
-#section-view-product .text-quantity {
-    font-weight: 700;
-    line-height: 24px;
+    line-height: 1.5rem;
 }
 
 /* Section Cart */
-
-.td-input {
+.td-input-quantity {
     width: 15%;
 }
 
 .cart-subtotal-title {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 .cart-subtotal-price {

@@ -1,4 +1,4 @@
-// Preview Image
+// Preview Image Section Account and Section Create/Edit Product
 function selectImage() {
   const image_f = document.getElementById("image_f");
   const file_container = document.getElementById("file_container");
@@ -20,7 +20,7 @@ function selectImage() {
 }
 
 
-// Update Cart Section
+// Section Cart
 $(document).ready(function() {
     $('.quantityChange').on('change', function() {
         var cart_id = $(this).attr('cart_id');
@@ -49,7 +49,7 @@ $(document).ready(function() {
 });
 
 
-// Update View Product Section
+// Section View Product
 $(document).ready(function() {
     $('#quantity').on('change', function() {
         var quantity = $('#quantity').val();

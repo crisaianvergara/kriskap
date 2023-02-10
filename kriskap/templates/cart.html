@@ -24,7 +24,7 @@
                                 <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                 <td>{{ cart.parent_product.name }}</td>
                                 <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
-                                <td class="td-input">
+                                <td class="td-input-quantity">
                                     <input onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="1" type="number" id="quantityChange{{ cart.id }}" cart_id = "{{ cart.id }}" value="{{ cart.quantity }}" class="quantityChange form-control text-center rounded-0 w-50">
                                 </td>
                                 <td id="cartNumber{{ cart.id }}" class="total-price">
