@@ -8,32 +8,32 @@ carts = Blueprint("carts", __name__)
 
 
 @carts.route("/product/<int:product_id>/view-product", methods=["GET", "POST"])
-@login_required
 def view_product(product_id):
     form = CartForm(quantity="1")
     requested_product = Product.query.get_or_404(product_id)
-    if form.validate_on_submit():
-        # Edit Cart
-        current_user_item = Cart.query.filter_by(buyer_id=current_user.id).all()
-        if current_user_item:
-            for item in current_user_item:
-                if item.product_id == requested_product.id:
-                    item.quantity += form.quantity.data
-                    db.session.commit()
-                    flash("This item has been added to cart!", "success")
-                    return redirect(
-                        url_for("carts.view_product", product_id=product_id)
-                    )
-        # Add to Cart
-        new_cart = Cart(
-            buyer=current_user,
-            parent_product=requested_product,
-            quantity=form.quantity.data,
-        )
-        db.session.add(new_cart)
-        db.session.commit()
-        flash("This item has been added to cart!", "success")
-        return redirect(url_for("carts.view_product", product_id=product_id))
+    if current_user.is_authenticated:
+        if form.validate_on_submit():
+            # Edit Cart
+            current_user_item = Cart.query.filter_by(buyer_id=current_user.id).all()
+            if current_user_item:
+                for item in current_user_item:
+                    if item.product_id == requested_product.id:
+                        item.quantity += form.quantity.data
+                        db.session.commit()
+                        flash("This item has been added to cart!", "success")
+                        return redirect(
+                            url_for("carts.view_product", product_id=product_id)
+                        )
+            # Add to Cart
+            new_cart = Cart(
+                buyer=current_user,
+                parent_product=requested_product,
+                quantity=form.quantity.data,
+            )
+            db.session.add(new_cart)
+            db.session.commit()
+            flash("This item has been added to cart!", "success")
+            return redirect(url_for("carts.view_product", product_id=product_id))
     return render_template(
         "view_product.html",
         product=requested_product,
@@ -64,7 +64,10 @@ def remove_cart(cart_id):
 @login_required
 def update():
     cart = Cart.query.get_or_404(request.form["cart_id"])
-    cart.quantity = request.form["quantity"]
+    if cart.parent_product.stock < int(request.form["quantity"]):
+        cart.quantity = cart.parent_product.stock
+    else:
+        cart.quantity = request.form["quantity"]
     db.session.commit()
     items = Cart.query.filter_by(buyer_id=current_user.id).all()
     cart_total = sum([item.quantity for item in items])
@@ -77,5 +80,19 @@ def update():
             "total": total,
             "cart_total": cart_total,
             "cart_subtotal": cart_subtotal,
+            "max": cart.parent_product.stock,
         }
     )
+
+
+@carts.route("/carts/<product_id>/need-login")
+@login_required
+def need_login(product_id):
+    return redirect(url_for("carts.view_product", product_id=product_id))
+
+
+@carts.route("/check-stock", methods=["POST"])
+@login_required
+def check_stock():
+    product = Product.query.get_or_404(request.form["product_id"])
+    return jsonify({"result": "success", "available_stock": product.stock})
