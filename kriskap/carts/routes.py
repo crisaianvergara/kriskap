@@ -66,6 +66,16 @@ def update():
     cart = Cart.query.get_or_404(request.form["cart_id"])
     cart.quantity = request.form["quantity"]
     db.session.commit()
-    total = cart.quantity * cart.parent_product.price
-
-    return jsonify({"result": "success", "total": total})
+    items = Cart.query.filter_by(buyer_id=current_user.id).all()
+    cart_total = sum([item.quantity for item in items])
+    cart_subtotal = "₱{:,.2f}".format(
+        sum([item.quantity * item.parent_product.price for item in items])
+    )
+    total = "₱{:,.2f}".format(cart.quantity * cart.parent_product.price)
+    return jsonify(
+        {
+            "total": total,
+            "cart_total": cart_total,
+            "cart_subtotal": cart_subtotal,
+        }
+    )

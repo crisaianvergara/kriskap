@@ -28,17 +28,22 @@ $(document).ready(function() {
         var cart_id = $(this).attr('cart_id');
         var quantity = $('#quantityChange'+cart_id).val();
 
-        req = $.ajax({
-            url : '/update',
-            type : 'POST',
-            data : { cart_id : cart_id, quantity: quantity }
-        });
+        if (quantity) {
 
-        req.done(function(data) {
-            var total = data.total
-            $('#cartNumber'+cart_id).text(total.toFixed(2));
-            console.log((total).toFixed(2));
-        });
+            req = $.ajax({
+                url : '/update',
+                type : 'POST',
+                data : { cart_id : cart_id, quantity: quantity }
+            });
+    
+            req.done(function(data) {
+                $('#cartNumber'+cart_id).text(data.total);
+                $('#cartTotal').text(data.cart_total);
+                $('#cart_subtotal').text(data.cart_subtotal);
+            });
+        }
+
+
 
     });
 

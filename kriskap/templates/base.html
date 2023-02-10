@@ -49,13 +49,15 @@
                         <li class="nav-item me-5">
                             <a href="{{ url_for('carts.view_cart') }}" class="nav-link position-relative d-inline-block">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                    {% set items = [] %}
-                                    {% for item in current_user.carts %}
-                                        {% if items.append(item.quantity) %}{% endif %}
-                                    {% endfor %}
-                                    {{ items | sum }}
-                                </span>
+                                {% if current_user.is_authenticated %}
+                                    <span id="cartTotal" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
+                                        {% set items = [] %}
+                                        {% for item in current_user.carts %}
+                                            {% if items.append(item.quantity) %}{% endif %}
+                                        {% endfor %}
+                                        {{ items | sum }}
+                                    </span>
+                                {% endif %}
                             </a>
                         </li>
                         {% if current_user.is_authenticated %}
