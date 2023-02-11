@@ -1,4 +1,4 @@
-// Preview Image Section Account and Section Create/Edit Product
+// Preview Image Section Account and Section - Create/Edit Product
 function selectImage() {
   const image_f = document.getElementById("image_f");
   const file_container = document.getElementById("file_container");
@@ -68,6 +68,53 @@ $(document).ready(function() {
                 $('#quantity').val(data.available_stock);
                 alert("You have reached the maximum quantity available for this item.")
             }
+        });
+    });
+});
+
+
+// Section Address - Search Cities
+$(document).ready(function() {
+    $('#province').on('click', function() {
+        var city = $('#city');
+        city.empty();
+        city.prop("disabled", true)
+        var barangay = $('#barangay');
+        barangay.empty();
+        barangay.prop("disabled", true)
+        var province_code = $('#province').val();
+        req = $.ajax({
+            url : '/address/search-city',
+            type : 'POST',
+            data : { province_code: province_code }
+        });
+        req.done(function(data) {
+            city.empty();
+            for (var i = 0; i < data.cities.length; i++) {
+                city.append('<option value='+ data.cities[i][0] + '>' + data.cities[i][1] + '</option>')
+            }
+            city.prop("disabled", false)
+        });
+    });
+});
+
+
+// Section Address - Search Barangay
+$(document).ready(function() {
+    $('#city').on('click', function() {
+        var city_code = $('#city').val();
+        req = $.ajax({
+            url : '/address/search-barangay',
+            type : 'POST',
+            data : { city_code: city_code }
+        });
+        req.done(function(data) {
+            var barangay = $('#barangay');
+            barangay.empty();
+            for (var i = 0; i < data.barangays.length; i++) {
+                barangay.append('<option value='+ data.barangays[i][0] + '>' + data.barangays[i][1] + '</option>')
+            }
+            barangay.prop("disabled", false)
         });
     });
 });

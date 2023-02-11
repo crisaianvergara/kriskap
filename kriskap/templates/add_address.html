@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="section-add-address" class="content-section mb-5">
+        <div class="row justify-content-between">
+            {% include "aside.html" %}
+            <div class="col-lg-9 ps-lg-5">
+                <h3>New Address</h3>
+                <p class="text-secondary">Add New Shipping / Billing Address.</p>
+                <hr>
+                <form method="POST" action="" novalidate enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    <fieldset>
+                        <div class="row justify-content-between">
+                            <div class="col-md-7">
+                                <div class="mb-3">
+                                    {{ form.house.label(class='form-label') }}
+                                    {% if form.house.errors %}
+                                        {{ form.house(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.house.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.house(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.province.label(class='form-label') }}
+                                    {% if form.province.errors %}
+                                        {{ form.province(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.province.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.province(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.city.label(class='form-label') }}
+                                    {% if form.city.errors %}
+                                        {{ form.city(class='form-control is-invalid', disabled=True) }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.city.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.city(class='form-control', disabled=True) }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.barangay.label(class='form-label') }}
+                                    {% if form.barangay.errors %}
+                                        {{ form.barangay(class='form-control is-invalid', disabled=True) }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.barangay.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.barangay(class='form-control', disabled=True) }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form.submit(class="btn btn-danger") }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
