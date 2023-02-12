@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
 
     carts = relationship("Cart", back_populates="buyer")
     wishlists = relationship("Wishlist", back_populates="wisher")
+    addresses = relationship("Address", back_populates="buyer")
 
 
 class Product(db.Model):
@@ -56,3 +57,16 @@ class Wishlist(db.Model):
 
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
     parent_product = relationship("Product", back_populates="wishlists")
+
+
+class Address(db.Model):
+    __tablename__ = "addresses"
+    id = db.Column(db.Integer, primary_key=True)
+
+    buyer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    buyer = relationship("User", back_populates="addresses")
+
+    house = db.Column(db.String(250), nullable=False)
+    province = db.Column(db.String(250), nullable=False)
+    city = db.Column(db.String(250), nullable=False)
+    barangay = db.Column(db.String(250), nullable=False)

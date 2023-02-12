@@ -1,10 +1,13 @@
-from flask import Blueprint, redirect, url_for, render_template, jsonify, request
-from flask_login import login_required
+from flask import Blueprint, redirect, url_for, render_template, jsonify, request, flash
+from flask_login import login_required, current_user
 from kriskap.addresses.forms import AddressForm
 from kriskap.addresses.utils import (
     search_municipality,
     search_barangay,
+    search_province,
 )
+from kriskap import db
+from kriskap.models import Address
 
 
 addresses = Blueprint("addresses", __name__)
@@ -13,13 +16,29 @@ addresses = Blueprint("addresses", __name__)
 @addresses.route("/address")
 @login_required
 def address():
-    return render_template("address.html", title="Address")
+    addresses = Address.query.filter_by(buyer_id=current_user.id).all()
+    return render_template("address.html", title="Address", addresses=addresses)
 
 
 @addresses.route("/address/add", methods=["GET", "POST"])
 @login_required
 def add_address():
     form = AddressForm()
+    if form.validate_on_submit():
+        cities = search_municipality(request.form["province"])
+        barangays = search_barangay(request.form["city"])
+        print(cities)
+        new_address = Address(
+            buyer=current_user,
+            house=form.house.data,
+            province=dict(search_province()).get(form.province.data),
+            city=dict(cities).get(request.form["city"]),
+            barangay=dict(barangays).get(request.form["barangay"]),
+        )
+        db.session.add(new_address)
+        db.session.commit()
+        flash("Delivery address added successfully", "success")
+        return redirect(url_for("addresses.address"))
     return render_template("add_address.html", title="Add Address", form=form)
 
 

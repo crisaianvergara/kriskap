@@ -1,17 +1,17 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField, StringField
-from wtforms.validators import DataRequired
-from kriskap.addresses.utils import search_province
+from wtforms.validators import DataRequired, Length
+from kriskap.addresses.utils import search_province, search_municipality
 
 
 class AddressForm(FlaskForm):
     house = StringField(
-        "House/Unit/Flr #, Bldg Name, Blk or Lot #", validators=[DataRequired()]
+        "House/Unit/Flr #, Bldg Name, Blk or Lot #",
+        validators=[DataRequired(), Length(min=5, max=200)],
     )
-    city = SelectField("City/Municipality", validators=[DataRequired()])
     province = SelectField(
-        "Province", choices=search_province(), validators=[DataRequired()]
+        "Province",
+        choices=search_province(),
+        validators=[DataRequired()],
     )
-    city = SelectField("City/Municipality", validators=[DataRequired()])
-    barangay = SelectField("Barangay", validators=[DataRequired()])
     submit = SubmitField("Save")
