@@ -49,7 +49,9 @@
                     </span>
                 </div>
                 <div class="mb-3 text-end">
-                    <a href="#" class="btn btn-danger">Check Out</a>
+                    <form action="/create-checkout-session" method="POST">
+                        <button type="submit" id="checkout-button" class="btn btn-danger">Check Out</button>
+                    </form>
                 </div>
             </div>
         </div>

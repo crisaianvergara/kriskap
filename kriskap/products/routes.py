@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from sqlalchemy import desc
 from flask_login import login_required
 from kriskap import db
-from kriskap.models import Product
+from kriskap.models import Product, Cart, Wishlist
 from kriskap.products.forms import ProductForm, UpdateProductForm
 from kriskap.products.utils import save_product_picture
 from kriskap.users.utils import admin_only
@@ -81,6 +81,11 @@ def update_product(product_id):
 @admin_only
 def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
+    cart = Cart.query.filter_by(product_id=product_id).first()
+    wishlist = Wishlist.query.filter_by(product_id=product_id).first()
+    if cart or wishlist:
+        flash("You can't delete this product. Product is in customers bag.", "danger")
+        return redirect(url_for("products.product"))
     db.session.delete(product)
     db.session.commit()
     flash(f"{product.name} has been deleted!", "success")

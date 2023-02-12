@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from kriskap.config import Config
 
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
@@ -10,7 +11,7 @@ login_manager.login_message_category = "info"
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path="", static_folder="static")
     app.config.from_object(Config)
 
     app.app_context().push()
@@ -25,6 +26,7 @@ def create_app():
     from kriskap.wishlist.routes import wishlists
     from kriskap.addresses.routes import addresses
     from kriskap.password.routes import password
+    from kriskap.checkout.routes import checkout
 
     app.register_blueprint(main)
     app.register_blueprint(users)
@@ -34,5 +36,6 @@ def create_app():
     app.register_blueprint(wishlists)
     app.register_blueprint(addresses)
     app.register_blueprint(password)
+    app.register_blueprint(checkout)
 
     return app
