@@ -6,9 +6,29 @@
             {% include "aside.html" %}
             <div class="col-lg-9 ps-lg-5">
                 <h3>My Addresses</h3>
-                <p class="text-secondary">Add New Shipping / Billing Address.</p>
+                <p class="text-secondary">Add, update and delete address.</p>
                 <a href="{{ url_for('addresses.add_address') }}" class="btn btn-success">Add New Address</a>
                 <hr>
+                {% for address in addresses %}
+                        <div class="address mb-3">
+                            <p class="mb-0">{{ address.house }}</p>
+                            <p>{{ address.barangay +", " + address.city + ", " + address.province }}</p>
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    {% if address.default == "not_default" %}
+                                    <a href="{{ url_for('addresses.default_address', address_id=address.id) }}" class="btn btn-sm btn-outline-secondary">Set as default</a>
+                                    {% else %}
+                                    <small class="border border-danger d-inline-block text-danger px-2 rounded">Default</small>
+                                    {% endif %}
+                                </div>
+                                <div class="">
+                                    <a href="{{ url_for('addresses.edit_address', address_id=address.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="{{ url_for('addresses.delete_address', address_id=address.id) }}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                {% endfor %}
             </div>
         </div>
     </section>

@@ -5,8 +5,8 @@
         <div class="row justify-content-between">
             {% include "aside.html" %}
             <div class="col-lg-9 ps-lg-5">
-                <h3>New Address</h3>
-                <p class="text-secondary">Add New Shipping / Billing Address.</p>
+                <h3>{{ title }}</h3>
+                <p class="text-secondary">Add or edit Shipping / Billing Address.</p>
                 <hr>
                 <form method="POST" action="" novalidate>
                     {{ form.csrf_token }}

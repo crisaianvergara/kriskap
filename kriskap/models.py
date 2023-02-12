@@ -66,6 +66,7 @@ class Address(db.Model):
     buyer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     buyer = relationship("User", back_populates="addresses")
 
+    default = db.Column(db.String(50), nullable=False, default="not_default")
     house = db.Column(db.String(250), nullable=False)
     province = db.Column(db.String(250), nullable=False)
     city = db.Column(db.String(250), nullable=False)
