@@ -36,7 +36,8 @@
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ form.province(class='form-control') }}
+                                        <select name="province-duplicate" class="form-select" id="province-duplicate" disabled></select>
+                                        {{ form.province(class='form-control', hidden="hidden") }}
                                     {% endif %}
                                 </div>
                                 <div class="mb-3">
@@ -58,6 +59,7 @@
                             </div>
                         </div>
                         {{ form.submit(class="btn btn-danger") }}
+                        <a href="{{ url_for('addresses.address') }}" class="btn btn-primary">Cancel</a>
                     </fieldset>
                 </form>
             </div>

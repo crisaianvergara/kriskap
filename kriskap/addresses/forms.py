@@ -14,4 +14,4 @@ class AddressForm(FlaskForm):
         choices=search_province(),
         validators=[DataRequired()],
     )
-    submit = SubmitField("Save")
+    submit = SubmitField("Submit", render_kw={"disabled": "disabled"})
