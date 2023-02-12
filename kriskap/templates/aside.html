@@ -4,9 +4,7 @@
         <a class="list-group-item list-group-item-action py-3" href="{{ url_for('addresses.address') }}"><i class="fa-solid fa-house"></i>Delivery Address</a>
         <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-bag-shopping"></i>My Orders</a>
         <a class="list-group-item list-group-item-action py-3" href="{{ url_for('wishlists.wishlist') }}"><i class="fa-solid fa-star"></i>My Wishlist</a>
-        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-eye"></i>Recently Viewed</a>
-        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-credit-card"></i>My Credits</a>
-        <a class="list-group-item list-group-item-action py-3" href="#"><i class="fa-solid fa-lock"></i>Change Password</a>
+        <a class="list-group-item list-group-item-action py-3" href="{{ url_for('password.change_password') }}"><i class="fa-solid fa-lock"></i>Change Password</a>
         {% if current_user.user_type == "admin" %}
             <a class="list-group-item list-group-item-action py-3" href="{{ url_for('products.product') }}"><i class="fa-solid fa-box"></i>Products</a>
             <a class="list-group-item list-group-item-action py-3" href="{{ url_for('admins.admin') }}"><i class="fa-solid fa-key"></i>Admin & Users</a>

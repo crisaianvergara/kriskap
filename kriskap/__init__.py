@@ -24,6 +24,7 @@ def create_app():
     from kriskap.carts.routes import carts
     from kriskap.wishlist.routes import wishlists
     from kriskap.addresses.routes import addresses
+    from kriskap.password.routes import password
 
     app.register_blueprint(main)
     app.register_blueprint(users)
@@ -32,5 +33,6 @@ def create_app():
     app.register_blueprint(carts)
     app.register_blueprint(wishlists)
     app.register_blueprint(addresses)
+    app.register_blueprint(password)
 
     return app

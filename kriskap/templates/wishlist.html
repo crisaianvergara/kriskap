@@ -10,7 +10,7 @@
                 <hr>
                 <div class="d-flex flex-row flex-wrap justify-content-start">
                     {% for wishlist in wishlists %}
-                    <div class="card border-0 m-4 shadow-lg position-relative" style="width: 10rem;">
+                    <div class="card border-0 m-4 shadow position-relative" style="width: 10rem;">
                         <div class="card-body the-product">
                             <a href="{{ url_for('wishlists.remove_wishlist', wishlist_id=wishlist.id) }}" class="nav-link position-absolute top-0 end-0 m-3">
                                 <i class="fa-solid fa-x text-danger"></i>
