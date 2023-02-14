@@ -26,6 +26,7 @@ def new_product():
     if form.validate_on_submit():
         image_f = save_product_picture(form.image_f.data)
         new_product = Product(
+            stripe_price=form.stripe_price.data,
             name=form.name.data,
             stock=form.stock.data,
             price=form.price.data,
@@ -44,6 +45,7 @@ def new_product():
 def update_product(product_id):
     product = Product.query.get_or_404(product_id)
     form = UpdateProductForm(
+        stripe_price=product.stripe_price,
         name=product.name,
         stock=product.stock,
         price=product.price,
@@ -56,9 +58,14 @@ def update_product(product_id):
                     "That product name is taken. Please choose different one.", "danger"
                 )
                 return redirect(url_for("products.product"))
+        if form.stripe_price.data != product.stripe_price:
+            if Product.query.filter_by(stripe_price=form.stripe_price.data).first():
+                flash("That Price ID is taken. Please choose different one.", "danger")
+                return redirect(url_for("products.product"))
         if form.image_f.data != product.image_file:
             image_f = save_product_picture(form.image_f.data)
             product.image_file = image_f
+        product.stripe_price = form.stripe_price.data
         product.name = form.name.data
         product.stock = form.stock.data
         product.price = form.price.data

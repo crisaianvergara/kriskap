@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
 class Product(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
+    stripe_price = db.Column(db.String(60), unique=True, nullable=False)
     name = db.Column(db.String(60), unique=True, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)

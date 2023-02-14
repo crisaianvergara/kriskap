@@ -6,6 +6,9 @@ from kriskap.models import Product
 
 
 class ProductForm(FlaskForm):
+    stripe_price = StringField(
+        "Price Id", validators=[DataRequired(), Length(min=5, max=60)]
+    )
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
     stock = IntegerField("Stock")
     price = FloatField("Price")
@@ -20,8 +23,18 @@ class ProductForm(FlaskForm):
         if product_name:
             raise ValidationError("That name is taken. Please choose a different one.")
 
+    def validate_stripe_price(self, stripe_price):
+        stripe_price = Product.query.filter_by(stripe_price=stripe_price.data).first()
+        if stripe_price:
+            raise ValidationError(
+                "That stripe price id is taken. Please choose a different one."
+            )
+
 
 class UpdateProductForm(FlaskForm):
+    stripe_price = StringField(
+        "Price ID", validators=[DataRequired(), Length(min=5, max=60)]
+    )
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
     stock = IntegerField("Stock")
     price = FloatField("Price")

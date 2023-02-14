@@ -8,6 +8,7 @@
                 <h3>My Wishlist</h3>
                 <p class="text-secondary">Wish what you really want.</p>
                 <hr>
+                {% if current_user.wishlists %}
                 <div class="d-flex flex-row flex-wrap justify-content-start">
                     {% for wishlist in wishlists %}
                     <div class="card border-0 m-4 shadow position-relative" style="width: 10rem;">
@@ -26,6 +27,12 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% else %}
+                <div class="text-center mt-5">
+                    <p class="text-muted">You haven't wish listed any products yet.</p>
+                    <a href="{{ url_for('main.home') }}" class="btn btn-danger">View Products</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </section>

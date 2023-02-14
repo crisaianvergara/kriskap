@@ -14,6 +14,19 @@
                         <div class="row justify-content-between">
                             <div class="col-lg-7">
                                 <div class="mb-3">
+                                    {{ form.stripe_price.label(class='form-label') }}
+                                    {% if form.stripe_price.errors %}
+                                        {{ form.stripe_price(class='form-control is-invalid') }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.stripe_price.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.stripe_price(class='form-control') }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
                                     {{ form.name.label(class='form-label') }}
                                     {% if form.name.errors %}
                                         {{ form.name(class='form-control is-invalid') }}
