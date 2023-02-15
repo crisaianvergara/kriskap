@@ -29,10 +29,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex ms-auto form-search w-50" role="search">
+                    <form method="POST" action="{{ url_for('products.search_product') }}" class="d-flex ms-auto form-search w-50" role="search">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control text-bg-dark border-secondary border-end-0" placeholder="Search in kriskap . . ." aria-label="Search in kriskap . . ." aria-describedby="button-addon">
-                            <button class="btn btn-outline-danger border-start-0 border-secondary" type="button" id="button-addon"><i class="fa-solid fa-magnifying-glass px-2"></i></button>
+                            <input name="search-product" type="text" class="form-control text-bg-dark border-secondary border-end-0" placeholder="Search in kriskap . . ." aria-label="Search in kriskap . . ." aria-describedby="button-addon">
+                            <button class="btn btn-outline-danger border-start-0 border-secondary" type="submit" id="button-addon"><i class="fa-solid fa-magnifying-glass px-2"></i></button>
                         </div>
                     </form>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 notification-cart">

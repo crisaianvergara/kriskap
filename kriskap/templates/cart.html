@@ -5,7 +5,15 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <h3>Shopping Cart</h3>
-                <p class="text-secondary">Edit and remove quantity on cart.</p>
+                {% if current_user.addresses %}
+                    {% for address in current_user.addresses %}
+                        {% if address.default == "default" %}
+                            <p class="text-secondary"><i class="fa-solid fa-location-dot"></i> Location: {{ address.house + ' ' + address.barangay + ', ' + address.city + ', ' + address.province }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-secondary"><i class="fa-solid fa-location-dot"></i> Add shipping address <a href="{{ url_for('addresses.address') }}" class="text-danger">here.</a></p>
+                {% endif %}
                 <hr>
                 {% if current_user.carts %}
                 <table class="table">
@@ -52,9 +60,17 @@
                     </span>
                 </div>
                 <div class="mb-3 text-end">
-                    <form action="{{ url_for('checkout.create_checkout_session') }}" method="POST">
-                        <button type="submit" id="checkout-button" class="btn btn-danger">Check Out</button>
-                    </form>
+                    {% if current_user.addresses %}
+                        {% for address in current_user.addresses %}
+                            {% if address.default == "default" %}
+                                <form action="{{ url_for('checkout.create_checkout_session') }}" method="POST">
+                                    <button type="submit" id="checkout-button" class="btn btn-danger">Check Out</button>
+                                </form>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <a href="{{ url_for('addresses.address') }}" class="btn btn-danger">Go to Address <i class="fa-solid fa-arrow-right"></i></a>
+                    {% endif %}
                 </div>
             </div>
             {% else %}

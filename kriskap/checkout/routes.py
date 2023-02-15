@@ -35,6 +35,7 @@ def create_checkout_session():
 def success_checkout():
     carts = Cart.query.filter_by(buyer_id=current_user.id).all()
     for cart in carts:
+        # Add cart to order history
         new_order = Order(
             buyer=current_user,
             parent_product=cart.parent_product,
@@ -42,6 +43,8 @@ def success_checkout():
             order_total=cart.parent_product.price * cart.quantity,
             status="Paid",
         )
+        # Update stock of parent product
+        cart.parent_product.stock = cart.parent_product.stock - cart.quantity
         db.session.add(new_order)
         db.session.commit()
         db.session.delete(cart)

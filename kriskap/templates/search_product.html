@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="section-search-product" class="content-section">
+        <h3 class="text-center mb-5">PRODUCTS</h3>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+            {% for product in products %}
+                <div class="card border-0 m-4 shadow-lg position-relative" style="width: 16rem;">
+                    <div class="card-body the-product">
+                        <a href="{{ url_for('wishlists.add_wishlist', product_id = product.id) }}" class="nav-link position-absolute top-0 end-0 m-3">
+                            <i class="fa-solid fa-star text-danger"></i>
+                        </a>
+                        <a href="{{ url_for('carts.view_product', product_id=product.id) }}">
+                            <img src="{{ url_for('static', filename='img/product_pics/' + product.image_file ) }}" class="card-img-top" alt="{{ product.name }}-Image">
+                            <h5 class="card-title mb-0">{{ product.name }}</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <p class="card-text text-danger">{{ "₱{:,.2f}".format(product.price) }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

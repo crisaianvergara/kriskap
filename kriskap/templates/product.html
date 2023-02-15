@@ -15,8 +15,8 @@
                         <th scope="col">Image</th>
                         <th scope="col">Name</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Price Id</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Price Id</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -26,8 +26,8 @@
                                 <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.stock }}</td>
-                                <td>{{ product.stripe_price }}</td>
                                 <td>{{ "₱{:,.2f}".format(product.price) }}</td>
+                                <td>{{ product.stripe_price }}</td>
                                 <td>
                                     <a href="{{ url_for('products.update_product', product_id=product.id) }}" class="btn btn-primary btn-sm">Update</a>
                                     <a href="#deleteModal{{ product.id }}" class="btn btn-danger btn-sm" data-bs-toggle="modal">Delete</a>

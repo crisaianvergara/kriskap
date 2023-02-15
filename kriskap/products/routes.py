@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from sqlalchemy import desc
 from flask_login import login_required
 from kriskap import db
-from kriskap.models import Product, Cart, Wishlist
+from kriskap.models import Product, Cart, Wishlist, Order
 from kriskap.products.forms import ProductForm, UpdateProductForm
 from kriskap.products.utils import save_product_picture
 from kriskap.users.utils import admin_only
@@ -16,6 +16,16 @@ products = Blueprint("products", __name__)
 def product():
     products = Product.query.order_by(desc("id")).all()
     return render_template("product.html", title="Products", products=products)
+
+
+@products.route("/product/search-product", methods=["GET", "POST"])
+def search_product():
+    product_name = request.form["search-product"]
+    products = Product.query.filter_by(name=product_name).all()
+    if not products:
+        flash("That product does not exist in Kriskap.", "danger")
+        return redirect(url_for("main.home"))
+    return render_template("search_product.html", title="Products", products=products)
 
 
 @products.route("/product/new", methods=["GET", "POST"])
@@ -90,7 +100,8 @@ def delete_product(product_id):
     product = Product.query.get_or_404(product_id)
     cart = Cart.query.filter_by(product_id=product_id).first()
     wishlist = Wishlist.query.filter_by(product_id=product_id).first()
-    if cart or wishlist:
+    order = Order.query.filter_by(product_id=product_id).first()
+    if cart or wishlist or order:
         flash("You can't delete this product. Product is in customers bag.", "danger")
         return redirect(url_for("products.product"))
     db.session.delete(product)
