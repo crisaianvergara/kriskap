@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField, StringField
 from wtforms.validators import DataRequired, Length
-from kriskap.addresses.utils import search_province, search_municipality
+from kriskap.addresses.utils import search_province
 
 
 class AddressForm(FlaskForm):

@@ -15,7 +15,6 @@ def create_checkout_session():
         {"price": cart.parent_product.stripe_price, "quantity": cart.quantity}
         for cart in carts
     ]
-
     try:
         checkout_session = stripe.checkout.Session.create(
             line_items=items,
