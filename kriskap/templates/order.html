@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="section-order" class="content-section mb-5">
+        <div class="row justify-content-between">
+            {% include "aside.html" %}
+            <div class="col-lg-9 ps-lg-5">
+                <h3>Orders</h3>
+                <p class="text-secondary">Your order history.</p>
+                <hr>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                                <tr class="align-middle">
+                                    <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + order.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                    <td>{{ order.parent_product.name }}</td>
+                                    <td>{{ "₱{:,.2f}".format(order.parent_product.price) }}</td>
+                                    <td>{{ order.quantity }}</td>
+                                    <td>{{ "₱{:,.2f}".format(order.order_total) }}</td>
+                                    <td class="text-success"><em>{{ order.status }}</em></td>
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

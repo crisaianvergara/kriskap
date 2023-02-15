@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     carts = relationship("Cart", back_populates="buyer")
     wishlists = relationship("Wishlist", back_populates="wisher")
     addresses = relationship("Address", back_populates="buyer")
+    orders = relationship("Order", back_populates="buyer")
 
 
 class Product(db.Model):
@@ -34,6 +35,7 @@ class Product(db.Model):
 
     carts = relationship("Cart", back_populates="parent_product")
     wishlists = relationship("Wishlist", back_populates="parent_product")
+    orders = relationship("Order", back_populates="parent_product")
 
 
 class Cart(db.Model):
@@ -72,3 +74,18 @@ class Address(db.Model):
     province = db.Column(db.String(250), nullable=False)
     city = db.Column(db.String(250), nullable=False)
     barangay = db.Column(db.String(250), nullable=False)
+
+
+class Order(db.Model):
+    __tablename__ = "orders"
+    id = db.Column(db.Integer, primary_key=True)
+
+    buyer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    buyer = relationship("User", back_populates="orders")
+
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
+    parent_product = relationship("Product", back_populates="orders")
+
+    quantity = db.Column(db.Integer, nullable=False, default=0)
+    order_total = db.Column(db.Integer, nullable=False, default=0)
+    status = db.Column(db.String(20), nullable=False, default="pending")

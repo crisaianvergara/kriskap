@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, url_for, render_template, flash
 from flask_login import login_required, current_user
 import stripe
 from kriskap import db
-from kriskap.models import Cart
+from kriskap.models import Cart, Order
 
 checkout = Blueprint("checkout", __name__)
 
@@ -35,9 +35,17 @@ def create_checkout_session():
 def success_checkout():
     carts = Cart.query.filter_by(buyer_id=current_user.id).all()
     for cart in carts:
+        new_order = Order(
+            buyer=current_user,
+            parent_product=cart.parent_product,
+            quantity=cart.quantity,
+            order_total=cart.parent_product.price * cart.quantity,
+            status="Paid",
+        )
+        db.session.add(new_order)
+        db.session.commit()
         db.session.delete(cart)
         db.session.commit()
-
     flash("Paid successfully. Thank you so much.", "success")
     return redirect(url_for("carts.cart"))
 
