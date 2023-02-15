@@ -1,1 +1,1 @@
-Read Me
+I built this project over a period of two weeks. It was developed using several technologies including Python, Flask, HTML, CSS, Bootstrap 5, Javascript, and jQuery. The project also integrates with the Philippine Standard Geographic Code (PSGC) API and Stripe API for checkout. Overall, this project demonstrates my ability to work with these technologies and develop a functional web application within a short timeframe.
