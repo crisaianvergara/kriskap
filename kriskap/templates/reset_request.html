@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<section id="section-login" class="content-section col-lg-6 m-auto">
+  <form method="POST" action="" novalidate>
+    {{ form.csrf_token }}
+    <fieldset>
+      <legend class="text-center mb-5">RESET PASSWORD</legend>
+      <div class="mb-3">
+        {{ form.email.label(class='form-label') }} {% if form.email.errors %} {{
+        form.email(class='form-control is-invalid') }}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.email(class='form-control') }} {% endif %}
+      </div>
+      {{ form.submit(class="btn btn-danger") }}
+    </fieldset>
+  </form>
+</section>
+{% endblock %}

@@ -1,104 +1,111 @@
 /* HTML Tags */
 body {
-    font-family: 'Roboto', sans-serif;
-    color: #212529;
+  font-family: "Roboto", sans-serif;
+  color: #212529;
 }
 
 h1 {
-    font-size: 1.6875rem;
-    font-weight: 500;
-    line-height: 2.025rem;
+  font-size: 1.6875rem;
+  font-weight: 500;
+  line-height: 2.025rem;
 }
 
-h3, legend {
-    font-size: 1.375rem;
-    font-weight: 500;
-    line-height: 1.65rem;
-    letter-spacing: 3px;
+h3,
+legend {
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.65rem;
+  letter-spacing: 3px;
 }
 
 a {
-    color: #212529;
-    text-decoration: none;
+  color: #212529;
+  text-decoration: none;
 }
 
 /* Navbar */
 .navbar-brand {
-    background-color: #DC3545;
-    border-radius: 3px;
-    font-weight: 900;
-    letter-spacing: 1px;
+  background-color: #dc3545;
+  border-radius: 3px;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 .form-control::placeholder {
-    color: #979797;
-    opacity: 1;
+  color: #979797;
+  opacity: 1;
 }
 
 /* Section Home */
 .the-product:hover {
-    opacity: 0.9;
-    text-decoration: underline;
+  opacity: 0.9;
+  text-decoration: underline;
 }
 
 /* Section Login */
 .hover-underline:hover {
-    color: #0dcaf0;
-    text-decoration: underline;
+  color: #0dcaf0;
+  text-decoration: underline;
 }
 
 /* Section Account */
 .account-img {
-    height: 125px;
-    width: 125px;
-  }
-
-.profile-pic label {
-    cursor: pointer;
+  height: 125px;
+  width: 125px;
 }
 
-  /* Aside */
+.profile-pic label {
+  cursor: pointer;
+}
+
+/* Aside */
 .list-group-item {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .list-group-item i {
-    width: 1.875rem;
+  width: 1.875rem;
 }
 
 /* Section View Product */
 .text-price {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.875rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.875rem;
 }
 
 .text-quantity {
-    font-weight: 700;
-    line-height: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5rem;
 }
 
 /* Section Cart */
 .td-input-quantity {
-    width: 15%;
+  width: 15%;
 }
 
 .cart-subtotal-title {
-    font-size: 1.125rem;
+  font-size: 1.125rem;
 }
 
 .cart-subtotal-price {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 /* Media Queries */
-@media (max-width: 992px) { 
-    .form-search {
-        margin-top: 1rem !important;
-        width: 100% !important;
-    }
+@media (max-width: 992px) {
+  .form-search {
+    margin-top: 1rem !important;
+    width: 100% !important;
+  }
 
-    .notification-cart {
-        margin-top: 0.7rem;
-    }
- }
+  .notification-cart {
+    margin-top: 0.7rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-id {
+    display: none;
+  }
+}

@@ -14,7 +14,8 @@ products = Blueprint("products", __name__)
 @login_required
 @admin_only
 def product():
-    products = Product.query.order_by(desc("id")).all()
+    page = request.args.get("page", 1, type=int)
+    products = Product.query.order_by(desc("id")).paginate(page=page, per_page=5)
     return render_template("product.html", title="Products", products=products)
 
 

@@ -1,9 +1,11 @@
 import os
 import secrets
-from flask import current_app, abort
+from flask import current_app, abort, url_for
 from PIL import Image
 from functools import wraps
 from flask_login import current_user
+from flask_mail import Message
+from kriskap import mail
 
 
 def admin_only(f):
@@ -28,3 +30,17 @@ def save_profile_picture(form_picture):
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
+
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message(
+        "Password Reset Request",
+        sender="SuperXaian4Kuruno@yahoo.com",
+        recipients=[user.email],
+    )
+    msg.body = f"""To reset your password, visit the following link:
+{url_for('users.reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+"""
+    mail.send(msg)

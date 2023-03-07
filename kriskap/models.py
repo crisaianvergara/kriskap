@@ -1,3 +1,5 @@
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 from kriskap import db, login_manager
 from flask_login import UserMixin
 from sqlalchemy.orm import relationship
@@ -22,6 +24,19 @@ class User(db.Model, UserMixin):
     wishlists = relationship("Wishlist", back_populates="wisher")
     addresses = relationship("Address", back_populates="buyer")
     orders = relationship("Order", back_populates="buyer")
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(current_app.config["SECRET_KEY"], expires_sec)
+        return s.dumps({"user_id": self.id}).decode("utf-8")
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            user_id = s.loads(token)["user_id"]
+        except:
+            return None
+        return User.query.get(user_id)
 
 
 class Product(db.Model):
