@@ -31,6 +31,7 @@ def create_app():
     from kriskap.password.routes import password
     from kriskap.checkout.routes import checkout
     from kriskap.orders.routes import orders
+    from kriskap.errors.handlers import errors
 
     app.register_blueprint(main)
     app.register_blueprint(users)
@@ -42,5 +43,6 @@ def create_app():
     app.register_blueprint(password)
     app.register_blueprint(checkout)
     app.register_blueprint(orders)
+    app.register_blueprint(errors)
 
     return app

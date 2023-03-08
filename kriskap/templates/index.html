@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+
+{% block content %}
 <section id="section-home" class="content-section">
   <h3 class="text-center mb-5">PRODUCTS</h3>
   <div class="d-flex flex-row flex-wrap justify-content-center">
@@ -33,19 +35,17 @@
   </div>
   <div class="text-center mt-3">
     {% for page_num in products.iter_pages(left_edge=1, right_edge=1,
-    left_current=1, right_current=2) %} {% if page_num %} {% if products.page ==
-    page_num %}
-    <a
-      class="btn btn-primary mb-4"
-      href="{{ url_for('main.home', page = page_num) }}"
-      >{{ page_num }}</a
-    >{% else %}
-    <a
-      class="btn btn-outline-primary mb-4"
-      href="{{ url_for('main.home', page = page_num) }}"
-      >{{ page_num }}</a
-    >
-    {% endif %} {% else %} ... {% endif %} {% endfor %}
+    left_current=1, right_current=2) %} 
+      {% if page_num %} 
+        {% if products.page == page_num %}
+          <a class="btn btn-primary mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-primary mb-4" href="{{ url_for('main.home', page = page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ... 
+      {% endif %} 
+    {% endfor %}
   </div>
 </section>
 {% endblock %}
