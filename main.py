@@ -2,6 +2,6 @@ from kriskap import create_app, db
 
 app = create_app()
 
-if __name__ == "__main__":
-    db.create_all()
-    app.run()
+# if __name__ == "__main__":
+#     db.create_all()
+#     app.run()
