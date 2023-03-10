@@ -17,6 +17,7 @@ mail = Mail()
 
 def create_app():
     """Construct the core application."""
+
     app = Flask(__name__, static_url_path="", static_folder="static")
 
     # Connect to the database
