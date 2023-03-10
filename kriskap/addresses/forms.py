@@ -5,6 +5,8 @@ from kriskap.addresses.utils import search_province
 
 
 class AddressForm(FlaskForm):
+    """Create address form."""
+
     house = StringField(
         "House/Unit/Flr #, Bldg Name, Blk or Lot #",
         validators=[DataRequired(), Length(min=5, max=200)],

@@ -4,6 +4,8 @@ from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class ChangePasswordForm(FlaskForm):
+    """Create a change password form."""
+
     new_password = PasswordField(
         "New Password", validators=[DataRequired(), Length(min=8)]
     )

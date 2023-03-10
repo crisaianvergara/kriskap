@@ -6,6 +6,8 @@ from kriskap.models import Product
 
 
 class ProductForm(FlaskForm):
+    """Create a new product form."""
+
     stripe_price = StringField(
         "Price Id", validators=[DataRequired(), Length(min=5, max=60)]
     )
@@ -32,6 +34,8 @@ class ProductForm(FlaskForm):
 
 
 class UpdateProductForm(FlaskForm):
+    """Create update product form."""
+
     stripe_price = StringField(
         "Price ID", validators=[DataRequired(), Length(min=5, max=60)]
     )
