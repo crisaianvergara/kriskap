@@ -4,7 +4,14 @@ from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class ChangePasswordForm(FlaskForm):
-    """Create a change password form."""
+    """
+    This class is used to change the password of a user.
+
+    Fields:
+    - new_password: A password field for the user's new password.
+    - confirm_password: A password field for confirming the user's new password.
+    - submit: A submit field for submitting the form.
+    """
 
     new_password = PasswordField(
         "New Password", validators=[DataRequired(), Length(min=8)]

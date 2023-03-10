@@ -11,9 +11,12 @@ password = Blueprint("password", __name__)
 @password.route("/password/change", methods=["GET", "POST"])
 @login_required
 def change_password():
+    """Route for changing the current user's password."""
+
     form = ChangePasswordForm()
     user = User.query.get_or_404(current_user.id)
     if form.validate_on_submit():
+        # Hash and salt the user's new password
         hash_and_salted_password = generate_password_hash(
             form.new_password.data, method="pbkdf2:sha256", salt_length=8
         )

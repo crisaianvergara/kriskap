@@ -12,23 +12,27 @@ from kriskap.users.forms import (
 )
 from kriskap.users.utils import save_profile_picture, send_reset_email
 
-
 users = Blueprint("users", __name__)
 
 
 @users.route("/register", methods=["GET", "POST"])
 def register():
+    """Route that registers a new user."""
+
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Hash and salt the user's password before storing it in the database
         hash_and_salted_password = generate_password_hash(
             form.password.data, method="pbkdf2:sha256", salt_length=8
         )
+        # If the first user is being registered, make them an admin. Otherwise, make them a customer.
         if User.query.filter_by(id=1).first():
             user_type = "customer"
         else:
             user_type = "admin"
+        # Create a new User object adn add it to the database
         new_user = User(
             user_type=user_type,
             username=form.username.data,
@@ -45,13 +49,17 @@ def register():
 
 @users.route("/login", methods=["GET", "POST"])
 def login():
+    """Route that logs in a user."""
+
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
+        # Find the user with the given email address
         user = User.query.filter_by(email=email).first()
+        # If the user does not exist or the password is incorrect, display an error message and redirect back to the login page
         if not user or not check_password_hash(user.password, password):
             flash("Incorrect email or password.", "danger")
             return redirect(url_for("users.login"))
@@ -63,6 +71,8 @@ def login():
 
 @users.route("/logout")
 def logout():
+    """Log out the current user and redirect them to the home page."""
+
     logout_user()
     return redirect(url_for("main.home"))
 
@@ -70,18 +80,24 @@ def logout():
 @users.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
+    """Route for user account page. Allows users to update their account information and profile picture."""
+
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        # Check if the user uploaded a new profile picture and save it
         if form.image_f.data:
             image_f = save_profile_picture(form.image_f.data)
             current_user.image_file = image_f
+        # Update the user's account information
         current_user.username = form.username.data
         current_user.name = form.name.data
         current_user.email = form.email.data
         db.session.commit()
         flash("Your account has been updated!", "success")
         return redirect(url_for("users.account"))
+    # Handle GET request to page
     elif request.method == "GET":
+        # Prepopulate form fields with user's current information
         form.username.data = current_user.username
         form.name.data = current_user.name
         form.email.data = current_user.email
@@ -95,10 +111,13 @@ def account():
 
 @users.route("/reset_password", methods=["GET", "POST"])
 def reset_request():
+    """Route for requesting a password reset. Allows users to enter their email address to receive reset instructions."""
+
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
     form = RequestResetForm()
     if form.validate_on_submit():
+        # Find user with matching email and send reset instructions
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
         flash(
@@ -110,8 +129,11 @@ def reset_request():
 
 @users.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_token(token):
+    """Route for resetting user password using reset token. Allows user to enter a new password."""
+
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
+    # Verify reset token
     user = User.verify_reset_token(token)
     if user is None:
         flash("That is an invalid or expired token", "warning")

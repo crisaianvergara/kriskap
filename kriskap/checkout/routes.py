@@ -10,12 +10,16 @@ checkout = Blueprint("checkout", __name__)
 @checkout.route("/create-checkout-session", methods=["POST"])
 @login_required
 def create_checkout_session():
+    """Route for creating a checkout session."""
+
     carts = Cart.query.filter_by(buyer_id=current_user.id).all()
+    # Prepare items for checkout
     items = [
         {"price": cart.parent_product.stripe_price, "quantity": cart.quantity}
         for cart in carts
     ]
     try:
+        # Create the checkout session
         checkout_session = stripe.checkout.Session.create(
             line_items=items,
             mode="payment",
@@ -24,6 +28,7 @@ def create_checkout_session():
             cancel_url=url_for("checkout.cancel_checkout", _external=True),
         )
     except Exception as e:
+        # Return error message if session creation failed
         return str(e)
 
     return redirect(checkout_session.url, code=303)
@@ -32,6 +37,7 @@ def create_checkout_session():
 @checkout.route("/create-checkout-session/success")
 @login_required
 def success_checkout():
+    """Route for handling a successful checkout."""
     carts = Cart.query.filter_by(buyer_id=current_user.id).all()
     for cart in carts:
         # Add cart to order history
@@ -55,4 +61,6 @@ def success_checkout():
 @checkout.route("/create-checkout-session/cancel")
 @login_required
 def cancel_checkout():
+    """Route for handling a cancelled checkout."""
+
     return redirect(url_for("carts.cart"))

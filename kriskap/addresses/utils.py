@@ -3,6 +3,8 @@ from operator import itemgetter
 
 
 def search_province():
+    """Returns a list of tuples containing the province code and name."""
+
     response = requests.get(url="https://psgc.gitlab.io/api/provinces/")
     response.raise_for_status()
     province = [(province["code"], province["name"]) for province in response.json()]
@@ -10,6 +12,8 @@ def search_province():
 
 
 def search_municipality(province_code):
+    """Returns a list of tuples containing the municipality code and name."""
+
     response = requests.get(
         url=f"https://psgc.gitlab.io/api/provinces/{province_code}/cities-municipalities/"
     )
@@ -19,6 +23,8 @@ def search_municipality(province_code):
 
 
 def search_barangay(city_code):
+    """Returns a list of tuples containing the barangay code and name."""
+
     response = requests.get(
         url=f"https://psgc.gitlab.io/api/cities-municipalities/{city_code}/barangays/"
     )

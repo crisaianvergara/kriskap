@@ -5,7 +5,14 @@ from kriskap.addresses.utils import search_province
 
 
 class AddressForm(FlaskForm):
-    """Create address form."""
+    """
+    This class defines the address form.
+
+    Fields:
+    - house: A string field for the user's house number.
+    - province: A select field for the user's province.
+    - submit: A submit field for submitting the form.
+    """
 
     house = StringField(
         "House/Unit/Flr #, Bldg Name, Blk or Lot #",

@@ -14,7 +14,8 @@ products = Blueprint("products", __name__)
 @login_required
 @admin_only
 def product():
-    # Pagination
+    """Route for displaying all products with pagination."""
+
     page = request.args.get("page", 1, type=int)
     products = Product.query.order_by(desc("id")).paginate(page=page, per_page=5)
     return render_template("product.html", title="Products", products=products)
@@ -22,7 +23,10 @@ def product():
 
 @products.route("/product/search-product", methods=["GET", "POST"])
 def search_product():
+    """Route for searching for a product."""
+
     product_name = request.form["search-product"]
+    # Filter products by name
     products = Product.query.filter_by(name=product_name).all()
     if not products:
         flash("That product does not exist in Kriskap.", "danger")
@@ -34,8 +38,10 @@ def search_product():
 @login_required
 @admin_only
 def new_product():
+    """Route for adding a new product."""
     form = ProductForm()
     if form.validate_on_submit():
+        # Save product picture and create a new Product instance
         image_f = save_product_picture(form.image_f.data)
         new_product = Product(
             stripe_price=form.stripe_price.data,
@@ -55,7 +61,10 @@ def new_product():
 @login_required
 @admin_only
 def update_product(product_id):
+    """Route for updating a product."""
+
     product = Product.query.get_or_404(product_id)
+    # Fill form fields with product data
     form = UpdateProductForm(
         stripe_price=product.stripe_price,
         name=product.name,
@@ -65,12 +74,14 @@ def update_product(product_id):
     )
     if form.validate_on_submit():
         if form.name.data != product.name:
+            # Check if product name is already taken
             if Product.query.filter_by(name=form.name.data).first():
                 flash(
                     "That product name is taken. Please choose different one.", "danger"
                 )
                 return redirect(url_for("products.product"))
         if form.stripe_price.data != product.stripe_price:
+            # Check if stripe price ID is already taken
             if Product.query.filter_by(stripe_price=form.stripe_price.data).first():
                 flash("That Price ID is taken. Please choose different one.", "danger")
                 return redirect(url_for("products.product"))
@@ -99,7 +110,10 @@ def update_product(product_id):
 @login_required
 @admin_only
 def delete_product(product_id):
+    """Route for deleting a product"""
+
     product = Product.query.get_or_404(product_id)
+    # Check if the product is in a customer's cart, wishlist or order
     cart = Cart.query.filter_by(product_id=product_id).first()
     wishlist = Wishlist.query.filter_by(product_id=product_id).first()
     order = Order.query.filter_by(product_id=product_id).first()

@@ -9,6 +9,8 @@ from kriskap import mail
 
 
 def admin_only(f):
+    """Decorator function that restricts access to routes to admin users only."""
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if current_user.user_type != "admin":
@@ -19,6 +21,8 @@ def admin_only(f):
 
 
 def save_profile_picture(form_picture):
+    """Resizes and saves the user's profile picture."""
+
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -33,6 +37,8 @@ def save_profile_picture(form_picture):
 
 
 def send_reset_email(user):
+    """Send an email to reset the password of a user."""
+
     token = user.get_reset_token()
     msg = Message(
         "Password Reset Request",

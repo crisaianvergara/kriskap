@@ -12,6 +12,8 @@ admins = Blueprint("admins", __name__)
 @login_required
 @admin_only
 def admin():
+    """Route for displaying all users."""
+
     users = User.query.all()
     return render_template("admin.html", title="Admin", users=users)
 
@@ -20,7 +22,10 @@ def admin():
 @login_required
 @admin_only
 def add_admin(user_id):
+    """Route for adding admin."""
+
     user = User.query.get_or_404(user_id)
+    # Set the user_type to 'admin'
     user.user_type = "admin"
     db.session.commit()
     flash(f"{user.username} has been added as an admin.", "success")
@@ -31,7 +36,10 @@ def add_admin(user_id):
 @login_required
 @admin_only
 def remove_admin(user_id):
+    """Route for removing admin."""
+
     user = User.query.get_or_404(user_id)
+    # Set the user_type to 'customer'
     user.user_type = "customer"
     db.session.commit()
     flash(f"{user.username} has been removed as an admin.", "success")
