@@ -4,7 +4,6 @@ from flask_login import LoginManager
 from kriskap.config import Config
 from flask_mail import Mail
 
-# Initialize the database
 db = SQLAlchemy()
 
 # Flask Login Stuff
@@ -20,8 +19,8 @@ def create_app():
 
     app = Flask(__name__, static_url_path="", static_folder="static")
 
-    # Connect to the database
     app.config.from_object(Config)
+
     app.app_context().push()
     db.init_app(app)
 
