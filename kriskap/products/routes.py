@@ -95,7 +95,7 @@ def update_product(product_id):
         db.session.commit()
         flash("Product has been updated.", "success")
         return redirect(url_for("products.product"))
-    image_file = url_for("static", filename="img/product_pics/" + product.image_file)
+    image_file = url_for("static", filename="img/" + product.image_file)
     return render_template(
         "create_product.html",
         title="Update Product",

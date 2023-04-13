@@ -30,7 +30,7 @@
                     <tbody>
                         {% for cart in carts %}
                             <tr class="align-middle">
-                                <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                <td><img width="70px" src="{{ url_for('static', filename='img/' + cart.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                 <td>{{ cart.parent_product.name }}</td>
                                 <td>{{ "₱{:,.2f}".format(cart.parent_product.price) }}</td>
                                 <td class="td-input-quantity">

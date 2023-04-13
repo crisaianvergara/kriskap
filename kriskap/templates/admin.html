@@ -22,7 +22,7 @@
                     <tbody>
                     {% for user in users %}
                         <tr class="align-middle">
-                            <td><img width="70px" src="{{ url_for('static', filename='img/profile_pics/' + user.image_file) }}" alt="Image Preview" class="image_view"></td>
+                            <td><img width="70px" src="{{ url_for('static', filename='img/' + user.image_file) }}" alt="Image Preview" class="image_view"></td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>

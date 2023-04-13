@@ -22,7 +22,7 @@
                     <tbody>
                         {% for order in orders %}
                                 <tr class="align-middle">
-                                    <td><img width="70px" src="{{ url_for('static', filename='img/product_pics/' + order.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
+                                    <td><img width="70px" src="{{ url_for('static', filename='img/' + order.parent_product.image_file) }}" alt="Image Preview" class="image_view"></td>
                                     <td>{{ order.parent_product.name }}</td>
                                     <td>{{ "₱{:,.2f}".format(order.parent_product.price) }}</td>
                                     <td>{{ order.quantity }}</td>
