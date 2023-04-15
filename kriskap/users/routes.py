@@ -28,7 +28,7 @@ def register():
             form.password.data, method="pbkdf2:sha256", salt_length=8
         )
         # If the first user is being registered, make them an admin. Otherwise, make them a customer.
-        if User.query.filter_by(id=1).first():
+        if User.query.first():
             user_type = "customer"
         else:
             user_type = "admin"
