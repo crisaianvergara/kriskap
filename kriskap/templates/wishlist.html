@@ -17,7 +17,7 @@
                                 <i class="fa-solid fa-x text-danger"></i>
                             </a>
                             <a href="{{ url_for('carts.view_product', product_id=wishlist.parent_product.id) }}">
-                                <img src="{{ url_for('static', filename='img/' + wishlist.parent_product.image_file ) }}" class="card-img-top" alt="{{ wishlist.parent_product.name }}-Image">
+                                <img src="{{ wishlist.parent_product.image_file }}" class="card-img-top" alt="{{ wishlist.parent_product.name }}-Image">
                                 <h5 class="card-title mb-0">{{ wishlist.parent_product.name }}</h5>
                             </a>
                         </div>

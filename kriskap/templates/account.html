@@ -12,64 +12,57 @@
                     {{ form.csrf_token }}
                     <fieldset>
                         <div class="row justify-content-between">
-                            <div class="col-md-7">
-                                <div class="mb-3">
-                                    {{ form.username.label(class='form-label') }}
-                                    {% if form.username.errors %}
-                                        {{ form.username(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.username.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.username(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.name.label(class='form-label') }}
-                                    {% if form.name.errors %}
-                                        {{ form.name(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.name.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.name(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.email.label(class='form-label') }}
-                                    {% if form.email.errors %}
-                                        {{ form.email(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.email.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.email(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="media text-center pt-4 mb-3" id="file_container">
-                                    <img id="view-profile-image" src="{{ image_file }}" alt="" class="rounded-circle account-img image_view">
-                                </div>
-                                <div class="mb-3 text-center profile-pic">
-                                    {{ form.image_f.label(class="form-control", onclick="selectImage()") }}
-                                    {{ form.image_f(class='form-control d-none',  accept="image/*") }}
-                                    {% if form.image_f.errors %}
-                                        {% for error in form.image_f.errors %}
-                                            <span class="text-danger">{{ error }}</span>
+                            <div class="mb-3">
+                                {{ form.username.label(class='form-label') }}
+                                {% if form.username.errors %}
+                                    {{ form.username(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            <span>{{ error }}</span>
                                         {% endfor %}
-                                    {% endif %}
-                                </div>
-                                <small class="text-muted text-center mb-3">
-                                    <p class="my-0">File size: maximum 1 MB</p>
-                                    <p class="my-0">File extension: .JPEG, .JPG, .PNG</p>
-                                </small>
+                                    </div>
+                                {% else %}
+                                    {{ form.username(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.name.label(class='form-label') }}
+                                {% if form.name.errors %}
+                                    {{ form.name(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.name(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.email.label(class='form-label') }}
+                                {% if form.email.errors %}
+                                    {{ form.email(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.image_f.label(class='form-label') }}
+                                {% if form.image_f.errors %}
+                                    {{ form.image_f(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.image_f.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.image_f(class='form-control') }}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.submit(class="btn btn-danger") }}

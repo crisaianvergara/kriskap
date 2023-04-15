@@ -84,11 +84,8 @@ def account():
 
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        # Check if the user uploaded a new profile picture and save it
-        if form.image_f.data:
-            image_f = save_profile_picture(form.image_f.data)
-            current_user.image_file = image_f
         # Update the user's account information
+        current_user.image_file = form.image_f.data
         current_user.username = form.username.data
         current_user.name = form.name.data
         current_user.email = form.email.data
@@ -101,10 +98,8 @@ def account():
         form.username.data = current_user.username
         form.name.data = current_user.name
         form.email.data = current_user.email
-    image_file = url_for("static", filename="img/" + current_user.image_file)
-    return render_template(
-        "account.html", title="Account", image_file=image_file, form=form
-    )
+        form.image_f.data = current_user.image_file
+    return render_template("account.html", title="Account", form=form)
 
 
 @users.route("/reset_password", methods=["GET", "POST"])

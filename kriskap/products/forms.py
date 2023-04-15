@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, IntegerField, FloatField
-from wtforms.validators import DataRequired, Length, ValidationError
+from wtforms.validators import DataRequired, Length, ValidationError, URL
 from kriskap.models import Product
 
 
@@ -24,10 +23,7 @@ class ProductForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
     stock = IntegerField("Stock")
     price = FloatField("Price")
-    image_f = FileField(
-        "Image",
-        validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg", "webp"])],
-    )
+    image_f = StringField("Image URL", validators=[DataRequired(), URL()])
     submit = SubmitField("Submit")
 
     def validate_name(self, name):
@@ -81,8 +77,5 @@ class UpdateProductForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=5, max=60)])
     stock = IntegerField("Stock")
     price = FloatField("Price")
-    image_f = FileField(
-        "Image",
-        validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg", "webp"])],
-    )
+    image_f = StringField("Image URL", validators=[DataRequired(), URL()])
     submit = SubmitField("Submit")

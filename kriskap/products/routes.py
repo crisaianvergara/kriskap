@@ -4,7 +4,6 @@ from flask_login import login_required
 from kriskap import db
 from kriskap.models import Product, Cart, Wishlist, Order
 from kriskap.products.forms import ProductForm, UpdateProductForm
-from kriskap.products.utils import save_product_picture
 from kriskap.users.utils import admin_only
 
 products = Blueprint("products", __name__)
@@ -41,14 +40,12 @@ def new_product():
     """Route for adding a new product."""
     form = ProductForm()
     if form.validate_on_submit():
-        # Save product picture and create a new Product instance
-        image_f = save_product_picture(form.image_f.data)
         new_product = Product(
             stripe_price=form.stripe_price.data,
             name=form.name.data,
             stock=form.stock.data,
             price=form.price.data,
-            image_file=image_f,
+            image_file=form.image_f.data,
         )
         db.session.add(new_product)
         db.session.commit()
@@ -85,23 +82,19 @@ def update_product(product_id):
             if Product.query.filter_by(stripe_price=form.stripe_price.data).first():
                 flash("That Price ID is taken. Please choose different one.", "danger")
                 return redirect(url_for("products.product"))
-        if form.image_f.data != product.image_file:
-            image_f = save_product_picture(form.image_f.data)
-            product.image_file = image_f
         product.stripe_price = form.stripe_price.data
         product.name = form.name.data
         product.stock = form.stock.data
         product.price = form.price.data
+        product.image_file = form.image_f.data
         db.session.commit()
         flash("Product has been updated.", "success")
         return redirect(url_for("products.product"))
-    image_file = url_for("static", filename="img/" + product.image_file)
     return render_template(
         "create_product.html",
         title="Update Product",
         product=product,
         form=form,
-        image_file=image_file,
         product_id=product_id,
     )
 

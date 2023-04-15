@@ -12,85 +12,73 @@
                     {{ form.csrf_token }}
                     <fieldset>
                         <div class="row justify-content-between">
-                            <div class="col-lg-7">
-                                <div class="mb-3">
-                                    {{ form.stripe_price.label(class='form-label') }}
-                                    {% if form.stripe_price.errors %}
-                                        {{ form.stripe_price(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.stripe_price.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.stripe_price(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.name.label(class='form-label') }}
-                                    {% if form.name.errors %}
-                                        {{ form.name(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.name.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.name(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.stock.label(class='form-label') }}
-                                    {% if form.stock.errors %}
-                                        {{ form.stock(class='form-control is-invalid') }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.stock.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        {{ form.stock(class='form-control') }}
-                                    {% endif %}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form.price.label(class='form-label') }}
-                                    <div class="input-group">
-                                        <span class="input-group-text">₱</span>
-                                        {% if form.price.errors %}
-                                            {{ form.price(class='form-control is-invalid') }}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.price.errors %}
-                                                    <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            {{ form.price(class='form-control') }}
-                                        {% endif %}
+                            <div class="mb-3">
+                                {{ form.stripe_price.label(class='form-label') }}
+                                {% if form.stripe_price.errors %}
+                                    {{ form.stripe_price(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.stripe_price.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
                                     </div>
-                                </div>
-                                <div class="">
-                                    {{ form.image_f.label(class='form-label') }}
-                                    {% if form.image_f.errors %}
-                                        {{ form.image_f(class='form-control is-invalid', onclick="selectImage()",  accept="image/*") }}
+                                {% else %}
+                                    {{ form.stripe_price(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.name.label(class='form-label') }}
+                                {% if form.name.errors %}
+                                    {{ form.name(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.name(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.stock.label(class='form-label') }}
+                                {% if form.stock.errors %}
+                                    {{ form.stock(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.stock.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.stock(class='form-control') }}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.price.label(class='form-label') }}
+                                <div class="input-group">
+                                    <span class="input-group-text">₱</span>
+                                    {% if form.price.errors %}
+                                        {{ form.price(class='form-control is-invalid') }}
                                         <div class="invalid-feedback">
-                                            {% for error in form.image_f.errors %}
+                                            {% for error in form.price.errors %}
                                                 <span>{{ error }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
-                                        {{ form.image_f(class='form-control', onclick="selectImage()",  accept="image/*") }}
+                                        {{ form.price(class='form-control') }}
                                     {% endif %}
                                 </div>
-                                <small class="text-muted">File size: maximum 1 MB | File extension: .JPEG, .JPG, .PNG</small>
                             </div>
-                            <div class="col-lg-4 d-flex align-items-center justify-content-center">
-                                <div id="file_container" class="mb-3">
-                                    {% if title == "Update Product" %}
-                                        <img id="view-product-image" src="{{ image_file }}" alt="Image Preview" class="img-fluid image_view">
-                                    {% else %}
-                                        <img id="view-product-image" src="{{ url_for('static', filename='img/default.png') }}" alt="Image Preview" class="img-fluid image_view">
-                                    {% endif %}
-                                </div>
+                            <div class="mb-3">
+                                {{ form.image_f.label(class='form-label') }}
+                                {% if form.image_f.errors %}
+                                    {{ form.image_f(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.image_f.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.image_f(class='form-control') }}
+                                {% endif %}
                             </div>
                         </div>
                         {{ form.submit(class="btn btn-danger mt-3") }}

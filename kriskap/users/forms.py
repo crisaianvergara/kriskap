@@ -1,7 +1,15 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+
+# from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    Email,
+    EqualTo,
+    ValidationError,
+    URL,
+)
 from flask_login import current_user
 from kriskap.models import User
 
@@ -97,9 +105,7 @@ class UpdateAccountForm(FlaskForm):
     )
     name = StringField("Name", validators=[DataRequired(), Length(min=5)])
     email = StringField("Email Address", validators=[DataRequired(), Email()])
-    image_f = FileField(
-        "Select Image", validators=[FileAllowed(["jpg", "png", "jpeg", "webp"])]
-    )
+    image_f = StringField("Profile Image URL", validators=[DataRequired(), URL()])
     submit = SubmitField("Update")
 
     def validate_username(self, username):
